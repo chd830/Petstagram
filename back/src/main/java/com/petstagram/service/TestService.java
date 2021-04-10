@@ -1,8 +1,8 @@
 package com.petstagram.service;
 
-import com.petstagram.petstagram.test.RestException;
-import com.petstagram.petstagram.test.Test;
-import com.petstagram.petstagram.test.TestRepository;
+import com.petstagram.test.RestException;
+import com.petstagram.test.Test;
+import com.petstagram.test.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
