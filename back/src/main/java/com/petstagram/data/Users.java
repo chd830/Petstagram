@@ -1,7 +1,11 @@
 package com.petstagram.data;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Id;
+
+@Document(collection = "users")
 // Getter생성
 @Getter
 // Setter생성
@@ -13,10 +17,14 @@ import lombok.*;
 // ToString생성
 @ToString
 public class Users {
+    @Id
     private String userEmail;
     private String userNickname;
     private String userPwd;
     private int userAge;
     private String userImg;
     private boolean isPublic;
+
+    // Friends
+    private String friendUserEmail;
 }
