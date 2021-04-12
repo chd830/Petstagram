@@ -12,8 +12,8 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/user")
-    public Users user(@RequestParam String userEmail, @RequestParam String userNickname, @RequestParam String userPwd, @RequestParam int userAge, @RequestParam String userImg, @RequestParam boolean isPublic) {
-        return new Users(userEmail, userNickname, userPwd, userAge, userImg, isPublic);
-    }
+//    @GetMapping("/user")
+//    public Users user(@RequestParam String userEmail, @RequestParam String userNickname, @RequestParam String userPwd, @RequestParam int userAge, @RequestParam String userImg, @RequestParam boolean isPublic) {
+//        return new Users(userEmail, userNickname, userPwd, userAge, userImg, isPublic);
+//    }
 }

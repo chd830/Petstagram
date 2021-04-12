@@ -34,25 +34,25 @@ public class MainControllerTest {
                 .andExpect(content().string(main));
     }
 
-    @Test
-    public void returnUser() throws Exception {
-        String userEmail = "chd830@naver.com";
-        String userNickname = "chong";
-        String userPwd = "password";
-        int userAge = 26;
-        boolean isPublic = false;
-
-        mvc.perform(get("/user")
-                .param("userEmail", userEmail)
-                .param("userNickname", userNickname)
-                .param("userPwd", userPwd)
-                .param("userImg", "")
-                .param("userAge", String.valueOf(userAge))
-                .param("isPublic", String.valueOf(isPublic)))
-                .andExpect(status().isOk())
-                // json응답을 필드별로 검증할 수 있는 메소드
-                .andExpect(jsonPath("$.userEmail", is(userEmail)))
-                .andExpect(jsonPath("$.userNickname", is(userNickname)));
-
-    }
+//    @Test
+//    public void returnUser() throws Exception {
+//        String userEmail = "chd830@naver.com";
+//        String userNickname = "chong";
+//        String userPwd = "password";
+//        int userAge = 26;
+//        boolean isPublic = false;
+//
+//        mvc.perform(get("/user")
+//                .param("userEmail", userEmail)
+//                .param("userNickname", userNickname)
+//                .param("userPwd", userPwd)
+//                .param("userImg", "")
+//                .param("userAge", String.valueOf(userAge))
+//                .param("isPublic", String.valueOf(isPublic)))
+//                .andExpect(status().isOk())
+//                // json응답을 필드별로 검증할 수 있는 메소드
+//                .andExpect(jsonPath("$.userEmail", is(userEmail)))
+//                .andExpect(jsonPath("$.userNickname", is(userNickname)));
+//
+//    }
 }
