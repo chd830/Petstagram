@@ -12,4 +12,9 @@ public class MainController {
         return "index";
     }
 
+    @PostMapping(path = "/user")
+    public void user(@RequestBody Users user) {
+        System.out.println(user);
+    }
+
 }

@@ -15,7 +15,13 @@ const routes = [
         path: "/",
         name: "HelloWorld",
         component: () => import('./../components/HelloWorld.vue')
+    },
+    {
+        path: "/signup",
+        name: "SignUp",
+        component: () => import('./../components/SignUp.vue')
     }
+
     // {
     //     path: "/", // 경로
     //     name: "Topic", // 해당 경로의 이름 
