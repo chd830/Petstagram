@@ -15,17 +15,30 @@ const routes = [
         name: "HelloWorld",
         component: () => import('./../components/HelloWorld.vue')
     },
+<<<<<<< HEAD:front/petstagram/src/router/router.js
+=======
     {
         path: "/signup",
         name: "SignUp",
         component: () => import('./../components/SignUp.vue')
     }
 
+>>>>>>> c8be00e66df138f17f368266016bcc56af7270b7:front/petstagram/src/router/index.js
     // {
     //     path: "/", // 경로
     //     name: "Topic", // 해당 경로의 이름 
     //     component: Topic // 이동할 컴포넌트
     // },
+    {
+        path: "/posts/",
+        name: "PostsView",
+        component: () => import('./../components/Posts/PostsView.vue')
+    },
+    {
+        path: "/posts/insert/",
+        name: "PostsInsert",
+        component: () => import('./../components/Posts/PostsInsert.vue')
+    }
 ]
 const router = new VueRouter({
     mode: 'history',
