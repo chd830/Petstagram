@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Document(collection = "users")
 // Getter생성
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 // ToString생성
 @ToString
+@XmlRootElement
 public class Users {
     @Id
     private String userEmail;
