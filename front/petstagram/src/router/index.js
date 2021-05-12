@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Router from 'vue-router'
 // 연결할 컴포넌트 import
 // import Topic from "./../components/Topic.vue"
 // import HelloWorld from "@/components/HelloWorld.vue"
@@ -8,7 +7,7 @@ import Router from 'vue-router'
 import VueRouter from 'vue-router'
 
 // 필수
-Vue.use(Router)
+Vue.use(VueRouter)
 
 const routes = [
     {
@@ -16,6 +15,15 @@ const routes = [
         name: "HelloWorld",
         component: () => import('./../components/HelloWorld.vue')
     },
+<<<<<<< HEAD:front/petstagram/src/router/router.js
+=======
+    {
+        path: "/signup",
+        name: "SignUp",
+        component: () => import('./../components/SignUp.vue')
+    }
+
+>>>>>>> c8be00e66df138f17f368266016bcc56af7270b7:front/petstagram/src/router/index.js
     // {
     //     path: "/", // 경로
     //     name: "Topic", // 해당 경로의 이름 
