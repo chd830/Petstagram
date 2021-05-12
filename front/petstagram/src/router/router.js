@@ -15,12 +15,22 @@ const routes = [
         path: "/",
         name: "HelloWorld",
         component: () => import('./../components/HelloWorld.vue')
-    }
+    },
     // {
     //     path: "/", // 경로
     //     name: "Topic", // 해당 경로의 이름 
     //     component: Topic // 이동할 컴포넌트
     // },
+    {
+        path: "/posts/",
+        name: "PostsView",
+        component: () => import('./../components/Posts/PostsView.vue')
+    },
+    {
+        path: "/posts/insert/",
+        name: "PostsInsert",
+        component: () => import('./../components/Posts/PostsInsert.vue')
+    }
 ]
 const router = new VueRouter({
     mode: 'history',
