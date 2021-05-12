@@ -75,6 +75,7 @@
             
             <!-- content -->
             <v-textarea
+              v-model="content"
               filled
               no-resize
               label="Content"
@@ -118,7 +119,7 @@
 </template>
 
 <script>
-  import router from '../../router/router'
+  import router from '../../router/index'
 
   export default {
     data: () => ({
@@ -168,6 +169,8 @@
         const postLike = 0;
         const commentNo = 0;
 
+        console.log(latitude, longitude, Date.now())
+
         const baseURL = "http://localhost:8000";
         this.$http.post(`${baseURL}/api/v1/posts/insert`, {
           postNo : 1,
@@ -186,7 +189,7 @@
           userEmail : "test"
         })
         .then(() => {
-          router.push("/posts")
+          // router.push("/posts")
         })
         .catch(() => {alert("Fail");})
       },

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <v-app>
     <transition>
       <router-view></router-view>
@@ -19,7 +18,3 @@
 //   }),
 // };
 </script>
-=======
-  <router-view></router-view>
-</template>
->>>>>>> c8be00e66df138f17f368266016bcc56af7270b7
