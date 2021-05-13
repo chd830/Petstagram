@@ -4,9 +4,12 @@
       hide-details="auto"
       v-model="userEmail"
     ></v-text-field>
+    <v-text-field v-model="userNickname"></v-text-field>
     <v-text-field v-model="userPwd"></v-text-field>
-    <v-btn v-on:click="signin" depressed>
-      Normal
+    <v-text-field v-model="userPwd2"></v-text-field>
+    <v-text-field v-model="userImg"></v-text-field>
+    <v-btn v-on:click="signup" depressed>
+      SignUp
     </v-btn>
   </div>
 </template>
@@ -20,37 +23,28 @@ export default {
   data() {
     return {
       userEmail: '',
-      userPwd: ''
+      userNickname: '',
+      userPwd: '',
+      userPwd2: '',
+      userImg: ''
     }
   },
   methods: {
-    signin: function() {
-      console.log(this.userEmail+"\t"+this.userPwd)
-      axios.get('http://localhost:8080/user', {
-        'Content-Type': 'application/json',
-          params: {
-            userEmail: this.userEmail,
-            userPwd : this.userPwd
-          },
-          
+    signup: function() {
+      if(this.userPwd != this.userPwd2) {
+        alert('입력한 두 비밀번호가 일치하지 않습니다.')
+        return
+      }
+      axios.get('http://localhost:8000/user', {
+        userEmail: this.userEmail,
+        userNickname: this.userNickname,
+        userPwd : this.userPwd,
+        userImg: this.userImg
       }, {
           withCredentials: true,
       }).then((res) => {
           console.log(res.data)
       })
-      // axios({
-      //   method: 'GET',
-      //   url: 'localhost:8080/user',
-      //   params: {
-      //     userEmail: this.userEmail,
-      //     userPwd: this.userPwd
-      //   },
-      //   withCredentials: true
-      // }).then((response) => {
-      //   console.log(response.data);
-      // }).catch((ex) => {
-      //   console.log("ERR");
-      // })
     }
   }
 }
