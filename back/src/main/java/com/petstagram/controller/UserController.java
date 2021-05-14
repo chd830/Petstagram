@@ -8,37 +8,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-public class MainController {
+public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/")
-    public String main() {
-        return "index";
-    }
-
-//    @GetMapping("/user")
-//    public Users getUser(@RequestParam String userEmail, @RequestParam String userPwd) {
-//        System.out.println(userEmail+"\t"+userPwd);
-//        Users user = new Users();
-//        user.setUserEmail(userEmail);
-//        user.setUserPwd(userPwd);
-//        System.out.println(user);
-//        return userService.insert(user);
+//    @GetMapping("/")
+//    public String main() {
+//        return "index";
 //    }
 
-    @PostMapping(path = "/user")
-    public void user(@RequestBody Users user) {
+    @PostMapping( "/api/v1/user/signup")
+    public void signup(@RequestBody Users user) {
         System.out.println(user);
         userService.insert(user);
     }
 
-    @PostMapping("/updateUser")
+    @PostMapping("/api/v1/user/signin")
+    public ResponseEntity<Boolean> signin(@RequestBody Users user) {
+        userService.getUsers(user);
+        return new ResponseEntity<>(userService.checkSignIn(user), HttpStatus.OK);
+    }
+    @PostMapping("/api/v1/user/update")
     public ResponseEntity<Boolean> updateUser(@RequestBody Users user) {
-        System.out.println(user);
         return new ResponseEntity<>(userService.updateUsers(user), HttpStatus.OK);
     }
 
