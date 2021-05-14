@@ -12,11 +12,14 @@
     <v-btn v-on:click="signin" depressed>
       SignIn
     </v-btn>
+    <v-btn v-on:click="signup" depressed>
+      SignUp
+    </v-btn>
   </div>
 </template>
 
 <script>
-// import router from '../../router/index.js'
+import router from '../../router/index.js'
 
 export default {
   name: "app",  
@@ -27,6 +30,9 @@ export default {
     }
   },
   methods: {
+    signup() {
+      router.push('/signup')
+    },
     signin() {
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
         userEmail: this.userEmail,
@@ -41,7 +47,7 @@ export default {
         console.log(res)
         if(res.data) {
           alert('로그인이 완료되었습니다.')
-          // router.push("/")
+          router.push("/")
         }
         else {
           alert('다시 로그인해 주세요.')

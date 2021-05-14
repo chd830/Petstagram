@@ -23,14 +23,15 @@ public class UserController {
 //    }
 
     @PostMapping( "/api/v1/user/signup")
-    public void signup(@RequestBody Users user) {
-        System.out.println(user);
+    public ResponseEntity<Boolean> signup(@RequestBody Users user) {
+        if(userService.getUsers(user) != null)
+            return new ResponseEntity<>(false, HttpStatus.OK);
         userService.insert(user);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/user/signin")
     public ResponseEntity<Boolean> signin(@RequestBody Users user) {
-        userService.getUsers(user);
         return new ResponseEntity<>(userService.checkSignIn(user), HttpStatus.OK);
     }
     @PostMapping("/api/v1/user/update")

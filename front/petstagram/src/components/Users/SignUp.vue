@@ -64,9 +64,14 @@ export default {
       },
       {
           withCredentials: true,
-      }).then(() => {
+      }).then((res) => {
+        if(res.data == true) {
           alert('회원가입이 완료되었습니다.')
           router.push("/signin")
+        }
+        else {
+          alert('이미 있는 이메일 입니다.')
+        }
       })
     }
   }
