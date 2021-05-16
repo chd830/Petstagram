@@ -3,20 +3,32 @@
     <v-text-field
       hide-details="auto"
       label="Email"
+      :rules="[() => !!userEmail || 'This field is required']"
       v-model="userEmail"
     ></v-text-field>
     <v-text-field 
     label="NickName"
     v-model="userNickname"
+    :rules="[() => !!userNickname || 'This field is required']"
     ></v-text-field>
     <v-text-field 
     label="Password"
     v-model="userPwd"
+    :rules="[() => !!userPwd || 'This field is required']"
     ></v-text-field>
     <v-text-field 
     label="Password check"
     v-model="userPwd2"
+    :rules="[() => !!userPwd2 || 'This field is required']"
     ></v-text-field>
+    <!-- <v-text-field 
+      v-model.number="foo" 
+      label="Number" 
+      append-outer-icon="add" 
+      @click:append-outer="increment" 
+      prepend-icon="remove" 
+      @click:prepend="decrement">
+      </v-text-field> -->
     <v-text-field 
     label="Image"
     v-model="userImg"
