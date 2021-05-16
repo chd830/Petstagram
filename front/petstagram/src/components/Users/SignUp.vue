@@ -27,18 +27,24 @@
     :type="show2 ? 'text' : 'password'"
     @click:append="show2 = !show2"
     ></v-text-field>
-    <!-- <v-text-field 
-      v-model.number="foo" 
-      label="Number" 
+    <v-text-field 
+      label="Age"
+      v-model.number="userAge" 
       append-outer-icon="add" 
       @click:append-outer="increment" 
       prepend-icon="remove" 
       @click:prepend="decrement">
-      </v-text-field> -->
-    <v-text-field 
-    label="Image"
-    v-model="userImg"
-    ></v-text-field>
+      </v-text-field>
+    <input ref="imageInput" type="file" hidden @change="onChangeImages">
+    <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
+    <!-- <v-file-input
+      accept="image/*"
+      label="Image"
+      @click="onClickImageUpload"
+    ></v-file-input> -->
+    <v-img
+      v-if="imageUrl" :src="imageUrl"
+    ></v-img>
     <v-btn v-on:click="signup" depressed>
       SignUp
     </v-btn>
@@ -60,6 +66,8 @@ export default {
       userPwd: '',
       userPwd2: '',
       userImg: '',
+      userAge: '',
+      imageUrl: null,
       show1: false,
       show2: false,
       password: 'Password',
@@ -71,6 +79,20 @@ export default {
     }
   },
   methods: {
+    onClickImageUpload() {
+      this.$refs.imageInput.click();
+    },
+    onChangeImages(e) {
+        console.log(e.target.files)
+        const file = e.target.files[0]; // Get first index in files
+        this.imageUrl = URL.createObjectURL(file); // Create File URL
+    },
+    increment() {
+      this.userAge += 1
+    },
+    decrement() {
+      this.userAge += 1
+    },
     cancel() {
       router.push('/signin')
     },
