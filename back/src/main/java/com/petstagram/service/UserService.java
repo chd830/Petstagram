@@ -25,6 +25,7 @@ public class UserService {
 
     // SELECT
     public Users getUsers(Users user) {
+//        return mongoTemplate.findById("userEmail", Users.class);
         for(Users u : this.getAllUsers()) {
             if(u.getUserEmail().equals(user.getUserEmail()))
                 return u;

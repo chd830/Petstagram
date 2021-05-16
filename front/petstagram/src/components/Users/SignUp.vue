@@ -14,12 +14,18 @@
     <v-text-field 
     label="Password"
     v-model="userPwd"
-    :rules="[() => !!userPwd || 'This field is required']"
+    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+    :rules="[rules.required, rules.min]"
+    :type="show1 ? 'text' : 'password'"
+    @click:append="show1 = !show1"
     ></v-text-field>
     <v-text-field 
     label="Password check"
     v-model="userPwd2"
-    :rules="[() => !!userPwd2 || 'This field is required']"
+    :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+    :rules="[rules.required, rules.min]"
+    :type="show2 ? 'text' : 'password'"
+    @click:append="show2 = !show2"
     ></v-text-field>
     <!-- <v-text-field 
       v-model.number="foo" 
@@ -53,7 +59,15 @@ export default {
       userNickname: '',
       userPwd: '',
       userPwd2: '',
-      userImg: ''
+      userImg: '',
+      show1: false,
+      show2: false,
+      password: 'Password',
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 4 || 'Min 4 characters',
+        emailMatch: () => (`The email and password you entered don't match`),
+      }
     }
   },
   methods: {
