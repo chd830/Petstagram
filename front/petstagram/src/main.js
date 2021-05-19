@@ -6,7 +6,10 @@ import router from './router/index.js'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
 import VueGeolocationApi from 'vue-geolocation-api'
+import { NavbarPlugin } from 'bootstrap-vue'
+// npm install --save bootstrap-vue
 
+Vue.use(NavbarPlugin)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
