@@ -58,8 +58,8 @@
 
           <!-- preview -->
           <v-img
-          v-if="imgURL" :src="imgURL"
-          style="width:250px;height:300px;object-fit:cover">
+            v-if="imgURL" :src="imgURL"
+            style="width:250px;height:300px;object-fit:cover">
           </v-img>
           
           <!-- subject -->
@@ -120,6 +120,7 @@
 
 <script>
   import router from '../../router/index'
+  import firebase from "firebase"
 
   export default {
     data: () => ({
@@ -127,12 +128,13 @@
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
       imgURL : null,
+      imgFile : null,
       subject: null,
       content : null,
       pets : ["강아지", "고양이", "햄스터", "물고기", "도마뱀"],
       category : "",
-      hashtag : "",
-      taguser : "",
+      hashtag : [],
+      taguser : [],
     }),
 
     watch: {
@@ -148,13 +150,13 @@
       changeImg(file) {
         if (file) {
           this.imgURL = URL.createObjectURL(file)
-          // URL.revokeObjectURL(file)
+          this.imgFile = file
         } else {this.imgURL=null}
       },
       resetForm () {
         router.push("/posts")
       },
-      submit () {
+      submit () {        
         // get position
         var latitude;
         var longitude;
@@ -164,34 +166,44 @@
         }, err => {
           console.log(err.message)
         })
+        // DateTime
         const createDate = Date.now().toString()
         const updateDate = createDate
         const postLike = 0;
         const commentNo = 0;
 
-        console.log(latitude, longitude, Date.now())
-
-        const baseURL = "http://localhost:8000";
-        this.$http.post(`${baseURL}/api/v1/posts/insert`, {
-          postNo : 1,
-          postSubject : this.subject,
-          postContent : this.content,
-          postLike : postLike,
-          postImg : this.imgURL,
-          postLng : longitude,
-          postLat : latitude,
-          postCreateDate : createDate,
-          postUpdateDate : updateDate,
-          commentNo : commentNo,
-          categoryName : this.category,
-          hashtagContent : this.hashtag.toString(),
-          tagUserEmail : this.taguser.toString(),
-          userEmail : "test"
-        })
+        // firebase
+        const storageRef = firebase.storage().ref(this.userEmail + this.subject)
+        storageRef.put(this.imgFile)
         .then(() => {
-          // router.push("/posts")
+          storageRef.getDownloadURL()
+          .then(url => {
+            // 동기 비동기 문제 해결할 것
+            this.imgURL = url
+
+            const baseURL = "http://localhost:8000";
+            this.$http.post(`${baseURL}/api/v1/posts/insert`, {
+              postNo : -1,
+              postSubject : this.subject,
+              postContent : this.content,
+              postLike : postLike,
+              postImg : this.imgURL,
+              postLng : longitude,
+              postLat : latitude,
+              postCreateDate : createDate,
+              postUpdateDate : updateDate,
+              commentNo : commentNo,
+              categoryName : this.category,
+              hashtagContent : this.hashtag,
+              tagUserEmail : this.taguser,
+              userEmail : "test"
+            })
+            .then(() => {
+              router.push("/posts")
+            })
+            .catch(() => {alert("Fail");})
+          })
         })
-        .catch(() => {alert("Fail");})
       },
     },
   }

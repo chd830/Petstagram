@@ -31,6 +31,8 @@ public class PostsController {
 
     @PostMapping("/api/v1/posts/insert")
     public ResponseEntity<Map<String, Object>> insertPosts(@RequestBody Posts posts){
+        int postNo = postService.getAll().size()+1;
+        posts.setPostNo(postNo);
         return handleSuccess(postService.insert(posts));
     }
 
@@ -39,6 +41,12 @@ public class PostsController {
         resultMap.put("state", "ok");
         resultMap.put("data", data);
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/v1/posts/userEmail")
+    public ResponseEntity<Map<String, Object>> getUsers(@RequestParam String userEmail){
+        Posts posts = postService.getPosts(userEmail);
+        return handleSuccess(posts);
     }
 
     public ResponseEntity<Map<String, Object>> handleFail(Object data, HttpStatus status){
