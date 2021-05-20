@@ -26,6 +26,7 @@
         </v-btn>
       </v-toolbar>
     </v-card>
+
     <!-- posts -->
     <v-container>
       <v-row>
@@ -35,13 +36,13 @@
           :key="post.postNo"
           cols="12"
         >
-        {{post}}
           <v-card>
             <v-img
               height="450px"
               :src="post.postImg"
               :alt="post.postSubject"
-              style="object-fit:cover"  
+              style="object-fit:cover"
+              @click="goDetail(post.postNo)"
             >
               <span
                 class="headline white--text pl-4 pt-4"
@@ -58,7 +59,6 @@
     <v-footer
     absolute>
       <v-bottom-navigation
-        v-model="bottomNav"
         dark
         shift
       >
@@ -92,7 +92,6 @@
   export default {
     data () {
       return {
-        bottomNav: 3,
         posts : [],
       }
     },
@@ -107,20 +106,13 @@
       },
       insertposts() {
         router.push("/posts/insert")
+      },
+      goDetail(postNo) {
+        router.push(`/posts/detail?postNo=${postNo}`)
       }
     },
     mounted() {
       this.getPosts();
     }
-    // computed: {
-    //   color () {
-    //     switch (this.bottomNav) {
-    //       case 0: return {'color':'blue-grey'}
-    //       case 1: return 'teal'
-    //       case 2: return 'brown'
-    //       case 3: return 'indigo'
-    //     }
-    //   },
-    // },
   }
 </script>

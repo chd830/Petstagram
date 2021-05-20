@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"*"}, maxAge=6000)
+//@CrossOrigin(origins = {"*"}, maxAge=6000)
 @RestController
 public class PostsController {
 
@@ -29,9 +29,28 @@ public class PostsController {
         return handleSuccess(posts);
     }
 
+    @GetMapping("/api/v1/posts/postNo")
+    public ResponseEntity<Map<String, Object>> getPostBypostNo(@RequestParam int postNo){
+        Posts posts = postService.getBypostNo(postNo);
+        return handleSuccess(posts);
+    }
+
     @PostMapping("/api/v1/posts/insert")
     public ResponseEntity<Map<String, Object>> insertPosts(@RequestBody Posts posts){
+        int postNo = postService.getAll().size()+1;
+        posts.setPostNo(postNo);
         return handleSuccess(postService.insert(posts));
+    }
+
+    @PostMapping("/api/v1/posts/update")
+    public ResponseEntity<Map<String, Object>> updatePost(@RequestBody Posts posts){
+        return handleSuccess(postService.update(posts));
+    }
+
+    @GetMapping("/api/v1/posts/userEmail")
+    public ResponseEntity<Map<String, Object>> getUsers(@RequestParam String userEmail){
+        Posts posts = postService.getPosts(userEmail);
+        return handleSuccess(posts);
     }
 
     public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
