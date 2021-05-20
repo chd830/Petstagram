@@ -45,6 +45,7 @@
     <v-img
       v-if="imageUrl" :src="imageUrl"
     ></v-img>
+    <br/><br/><br/>
     <v-btn v-on:click="signup" depressed>
       SignUp
     </v-btn>

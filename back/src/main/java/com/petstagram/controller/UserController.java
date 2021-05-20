@@ -17,10 +17,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-//    @GetMapping("/")
-//    public String main() {
-//        return "index";
-//    }
+    @PostMapping("/api/v1/user")
+    public ResponseEntity<Users> user(@RequestBody Users user) {
+        return new ResponseEntity<>(userService.getUsers(user), HttpStatus.OK);
+    }
 
     @PostMapping( "/api/v1/user/signup")
     public ResponseEntity<Boolean> signup(@RequestBody Users user) {
