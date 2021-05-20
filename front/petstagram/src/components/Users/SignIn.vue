@@ -1,5 +1,6 @@
 <template>
-  <div id="form-2">
+  <v-row justify="center">
+    <v-col cols="12" sm="10" md="8" lg="6">
     <v-text-field
       hide-details="auto"
       label="Email"
@@ -9,13 +10,15 @@
     label="Password"
     v-model="userPwd"
     ></v-text-field>
-    <v-btn v-on:click="signin" depressed>
+    <v-btn v-on:click="signin" color="primary" large outlined>
       SignIn
     </v-btn>
-    <v-btn v-on:click="signup" depressed>
+    &nbsp;&nbsp;&nbsp;
+    <v-btn v-on:click="signup" color="error" large outlined>
       SignUp
     </v-btn>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -46,6 +49,7 @@ export default {
       }).then((res) => {
         console.log(res)
         if(res.data) {
+          localStorage.setItem("userEmail", this.userEmail)
           alert('로그인이 완료되었습니다.')
           router.push("/")
         }

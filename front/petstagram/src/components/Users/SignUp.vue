@@ -1,5 +1,6 @@
 <template>
-  <div id="form-2">
+  <v-row justify="center">
+    <v-col cols="12" sm="10" md="8" lg="6">
     <v-text-field
       hide-details="auto"
       label="Email"
@@ -46,13 +47,15 @@
       v-if="imageUrl" :src="imageUrl"
     ></v-img>
     <br/><br/><br/>
-    <v-btn v-on:click="signup" depressed>
+    <v-btn v-on:click="signup" color="primary" large outlined>
       SignUp
     </v-btn>
-    <v-btn v-on:click="cancel" depressed>
+    &nbsp;&nbsp;&nbsp;
+    <v-btn v-on:click="cancel" color="error" large outlined>
       Cancel
     </v-btn>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
