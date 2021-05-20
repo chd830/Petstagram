@@ -1,9 +1,4 @@
 import Vue from 'vue'
-// 연결할 컴포넌트 import
-// import Topic from "./../components/Topic.vue"
-// import HelloWorld from "@/components/HelloWorld.vue"
-// import IdolList from "@/components/IdolList.vue"
-// import WriteUwasa from "@/components/WriteUwasa.vue"
 import VueRouter from 'vue-router'
 
 // 필수
@@ -18,14 +13,23 @@ const routes = [
     {
         path: "/signup",
         name: "SignUp",
-        component: () => import('./../components/SignUp.vue')
+        component: () => import('../components/Users/SignUp.vue')
     },
-
-    // {
-    //     path: "/", // 경로
-    //     name: "Topic", // 해당 경로의 이름 
-    //     component: Topic // 이동할 컴포넌트
-    // },
+    {
+        path: "/signin",
+        name: "Signin",
+        component: () => import('../components/Users/SignIn.vue')
+    },
+    {
+        path: '/mypage',
+        name: "MyPage",
+        component: () => import('../components/Users/MyPage.vue')
+    },
+    {
+        path: '/logout',
+        name: "LogOut",
+        component: () => import('../components/Users/Logout.vue')
+    },
     {
         path: "/posts/",
         name: "PostsView",

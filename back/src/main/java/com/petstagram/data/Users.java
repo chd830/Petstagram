@@ -3,6 +3,7 @@ package com.petstagram.data;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -17,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 // ToString생성
 @ToString
+@Entity
 @XmlRootElement
 public class Users {
     @Id

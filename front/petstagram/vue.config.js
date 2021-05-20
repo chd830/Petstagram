@@ -3,7 +3,7 @@ module.exports = {
       clientLogLevel: 'info',
       proxy: {
         '/api': {
-          target: 'http://localhost:8080',
+          target: 'http://localhost:8000',
           changeOrigin: true,
           pathRewrite: {
             '^/api': ''
