@@ -38,10 +38,10 @@ public class Posts {
     private String categoryName;
 
     // HashTags
-    private String hashtagContent;
+    private List<String> hashtagContent;
 
     // PostTags
-    private String tagUserEmail;
+    private List<String> tagUserEmail;
 
     // Users
     private String userEmail;

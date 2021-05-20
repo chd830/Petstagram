@@ -12,9 +12,19 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue)
 // npm install --save bootstrap-vue
+import firebase from "firebase"
+import datetime from "vue-datetime"
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+var firebaseConfig = {
+
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+Vue.component("datetime", datetime)
 
 new Vue({
   router,
