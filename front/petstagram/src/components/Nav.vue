@@ -13,15 +13,9 @@
         <b-nav-item href="/mypage">MyPage</b-nav-item>
         <b-nav-item href="/signup">Signup</b-nav-item>
         <b-nav-item href="/signin">SignIn</b-nav-item>
+        <b-nav-item href="/Logout">Logout</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </div>
-<!-- <div>
-  <b-navbar toggleable="lg" type="dark" variant="info">
-    <b-navbar-brand href="/">Home</b-navbar-brand>
-    <b-navbar-brand href="/signin">SignIn</b-navbar-brand>
-    <b-navbar-brand href="/signup">SignUp</b-navbar-brand>
-  </b-navbar>
-</div> -->
 </template>
