@@ -35,7 +35,17 @@ const routes = [
         path: "/posts/insert/",
         name: "PostsInsert",
         component: () => import('./../components/Posts/PostsInsert.vue')
-    }
+    },
+    {
+        path: "/posts/detail/",
+        name: "PostDetail",
+        component: () => import('./../components/Posts/PostDetail.vue')
+    },
+    {
+        path: "/posts/update/",
+        name: "PostUpdate",
+        component: () => import('./../components/Posts/PostUpdate.vue')
+    },
 ]
 const router = new VueRouter({
     mode: 'history',

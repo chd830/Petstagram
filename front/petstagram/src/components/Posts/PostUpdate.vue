@@ -61,7 +61,6 @@
             v-if="imgURL" :src="imgURL"
             style="width:250px;height:300px;object-fit:cover">
           </v-img>
-          
           <!-- subject -->
           <v-card-text>
             <v-text-field
@@ -124,6 +123,7 @@
 
   export default {
     data: () => ({
+      post: [],
       rules: [
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
@@ -157,55 +157,86 @@
         router.push("/posts")
       },
       submit () {        
-        // get position
-        var latitude;
-        var longitude;
-        navigator.geolocation.getCurrentPosition(pos => {
-        latitude = pos.coords.latitude;
-        longitude = pos.coords.longitude;
-        }, err => {
-          console.log(err.message)
-        })
         // DateTime
-        var createDate = new Date();
-        createDate = `${createDate.getFullYear()}/${createDate.getMonth()}/${createDate.getDate}/${createDate.getHours}:${createDate.getMinutes}:${createDate.getSeconds}`
-        const updateDate = createDate
-        const postLike = 0;
-        const commentNo = 0;
+        var updateDate = new Date()
+        updateDate = `${updateDate.getFullYear()}/${updateDate.getMonth()}/${updateDate.getDate}/${updateDate.getHours}:${updateDate.getMinutes}:${updateDate.getSeconds}`
 
         // firebase
-        const storageRef = firebase.storage().ref(this.userEmail + this.subject)
-        storageRef.put(this.imgFile)
-        .then(() => {
-          storageRef.getDownloadURL()
-          .then(url => {
-            // 동기 비동기 문제 해결할 것
-            this.imgURL = url
+        if (this.imgURL !== this.post.postImg){
+          const storageRef = firebase.storage().ref(this.userEmail + this.subject)
+          storageRef.put(this.imgFile)
+          .then(() => {
+            storageRef.getDownloadURL()
+            .then(url => {
+              // 동기 비동기 문제 해결할 것
+              this.imgURL = url
 
-            const baseURL = "http://localhost:8000";
-            this.$http.post(`${baseURL}/api/v1/posts/insert`, {
-              postNo : -1,
-              postSubject : this.subject,
-              postContent : this.content,
-              postLike : postLike,
-              postImg : this.imgURL,
-              postLng : longitude,
-              postLat : latitude,
-              postCreateDate : createDate,
-              postUpdateDate : updateDate,
-              commentNo : commentNo,
-              categoryName : this.category,
-              hashtagContent : this.hashtag,
-              tagUserEmail : this.taguser,
-              userEmail : "test"
+              const baseURL = "http://localhost:8000";
+              this.$http.post(`${baseURL}/api/v1/posts/update`, {
+                postNo : this.post.postNo,
+                postSubject : this.subject,
+                postContent : this.content,
+                postLike : this.post.postLike,
+                postImg : this.imgURL,
+                postLng : this.post.postLng,
+                postLat : this.post.postLat,
+                postCreateDate : this.post.postCreateDate,
+                postUpdateDate : updateDate,
+                commentNo : this.post.commentNo,
+                categoryName : this.category,
+                hashtagContent : this.hashtag,
+                tagUserEmail : this.taguser,
+                userEmail : "test"
+              })
+              .then(() => {
+                router.push("/posts")
+              })
+              .catch(() => {alert("Fail");})
             })
-            .then(() => {
-              router.push("/posts")
-            })
-            .catch(() => {alert("Fail");})
           })
-        })
+        } else {
+          // 동기 비동기 문제 해결할 것
+          const baseURL = "http://localhost:8000";
+          this.$http.post(`${baseURL}/api/v1/posts/update`, {
+            postNo : this.post.postNo,
+            postSubject : this.subject,
+            postContent : this.content,
+            postLike : this.post.postLike,
+            postImg : this.imgURL,
+            postLng : this.post.postLng,
+            postLat : this.post.postLat,
+            postCreateDate : this.post.postCreateDate,
+            postUpdateDate : updateDate,
+            commentNo : this.post.commentNo,
+            categoryName : this.category,
+            hashtagContent : this.hashtag,
+            tagUserEmail : this.taguser,
+            userEmail : "test"
+          })
+          .then(() => {
+            router.push("/posts")
+            console.log(this.imgURL)
+          })
+          .catch(() => {alert("Fail");})
+        }
       },
+      getPost() {
+        const baseURL = "http://localhost:8000";
+        this.$http.get(`${baseURL}/api/v1/posts/postNo?postNo=${this.$route.query.postNo}`)
+        .then((response) => {
+          this.post = response.data.data;
+          this.imgURL = this.post.postImg
+          this.subject = this.post.postSubject
+          this.content = this.post.postContent
+          this.category = this.post.categoryName
+          this.hashtag = this.post.hashtagContent
+          this.taguser = this.post.tagUserEmail
+        })
+        .catch(() => {alert("Fail");})
+      }
     },
+    mounted() {
+      this.getPost();
+    }
   }
 </script>

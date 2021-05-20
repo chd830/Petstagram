@@ -2,10 +2,12 @@ package com.petstagram.service;
 
 import com.petstagram.data.Posts;
 import com.petstagram.test.RestException;
+import com.petstagram.test.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +29,14 @@ public class PostService{
         }
         return null;
     }
-    public Posts getBypostNo(int postsNo){
+    public Posts getBypostNo(int postNo){
         try{
-            Posts post = mongoTemplate.findById(postsNo, Posts.class);
+            Criteria criteria = new Criteria("postNo");
+            criteria.is(postNo);
+
+            Query query = new Query(criteria);
+
+            Posts post = mongoTemplate.findOne(query, Posts.class, "Posts");
             return Optional.ofNullable(post).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not found"));
         }catch(Exception e){
             e.printStackTrace();
@@ -58,7 +65,21 @@ public class PostService{
     }
     public boolean update(Posts posts){
         try{
+            Criteria criteria = new Criteria("postNo");
+            criteria.is(posts.getPostNo());
 
+            Query query = new Query(criteria);
+            Update update = new Update();
+
+            update.set("postSubject", posts.getPostSubject());
+            update.set("postContent", posts.getPostContent());
+            update.set("postImg", posts.getPostImg());
+            update.set("postUpdateDate", posts.getPostUpdateDate());
+            update.set("categoryName", posts.getCategoryName());
+            update.set("hashtagContent", posts.getHashtagContent());
+            update.set("tagUserEmail", posts.getTagUserEmail());
+
+            mongoTemplate.updateFirst(query, update, Posts.class);
             return true;
         }catch(Exception e){
             e.printStackTrace();
@@ -86,7 +107,6 @@ public class PostService{
         Query query = new Query(criteria);
 
         Posts post = mongoTemplate.findOne(query, Posts.class, "Posts");
-//        Users user = mongoTemplate.findById(userEmail, Users.class);
         return Optional.ofNullable(post).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not found"));
     }
 }
