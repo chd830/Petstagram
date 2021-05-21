@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private static UserService userService = new UserService();
 
     @PostMapping("/api/v1/user")
-    public ResponseEntity<Users> user(@RequestBody Users user) {
+    public ResponseEntity<Users> getUser(@RequestBody Users user) {
         return new ResponseEntity<>(userService.getUsers(user), HttpStatus.OK);
     }
 

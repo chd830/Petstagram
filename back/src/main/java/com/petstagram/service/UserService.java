@@ -4,6 +4,7 @@ import com.petstagram.data.Users;
 import com.petstagram.test.RestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -15,8 +16,8 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private MongoTemplate mongoTemplate;
+
+    private MongoTemplate mongoTemplate = new MongoTemplate(new SimpleMongoClientDatabaseFactory("mongodb://127.0.0.1:27017/test"));
 
     // INSERT
     public Users insert(Users user) {
