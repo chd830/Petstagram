@@ -2,7 +2,6 @@ package com.petstagram.service;
 
 import com.petstagram.data.Posts;
 import com.petstagram.test.RestException;
-import com.petstagram.test.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -78,6 +77,8 @@ public class PostService{
             update.set("categoryName", posts.getCategoryName());
             update.set("hashtagContent", posts.getHashtagContent());
             update.set("tagUserEmail", posts.getTagUserEmail());
+            update.set("postLike", posts.getPostLike());
+            update.set("commentNo", posts.getCommentNo());
 
             mongoTemplate.updateFirst(query, update, Posts.class);
             return true;

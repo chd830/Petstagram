@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 // ToString생성
 @ToString
-@Entity
 public class Posts {
     @Id
     private int postNo;

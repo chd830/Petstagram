@@ -174,7 +174,7 @@
         const commentNo = 0;
 
         // firebase
-        const storageRef = firebase.storage().ref(this.userEmail + this.subject)
+        const storageRef = firebase.storage().ref(this.postNo)
         storageRef.put(this.imgFile)
         .then(() => {
           storageRef.getDownloadURL()
