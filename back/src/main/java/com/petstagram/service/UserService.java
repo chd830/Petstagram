@@ -24,9 +24,17 @@ public class UserService {
     }
 
     // SELECT
-    public Users getUsers(String userEmail) {
-        Users user = mongoTemplate.findById(userEmail, Users.class);
-        return Optional.ofNullable(user).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not fount"));
+    public Users getUsers(Users user) {
+//        return mongoTemplate.findById("userEmail", Users.class);
+        for(Users u : this.getAllUsers()) {
+            if(u.getUserEmail().equals(user.getUserEmail()))
+                return u;
+        }
+        return null;
+    }
+
+    public Boolean checkSignIn(Users user) {
+        return this.getUsers(user).getUserPwd().equals(user.getUserPwd());
     }
 
     public List<Users> getAllUsers() {
@@ -34,14 +42,19 @@ public class UserService {
     }
 
     // UPDATE
-    public void updateUsers(Users user) {
-//        org.springframework.data.mongodb.core.query.Criteria criteria = new Criteria("userName");
-//        criteria.is(name);
+    public boolean updateUsers(Users user) {
+        try {
+            Criteria criteria = new Criteria("userNickname");
+            criteria.is(user.getUserNickname());
 
-//        Query query = new Query(criteria);
-//        Update update = new Update();
-//        update.set("userName", newname);
+            Query query = new Query(criteria);
+            Update update = new Update();
+            update.set("userNickname", user.getUserNickname());
 // 하나만/
-//        mongoTemplate.updateFirst(query, update, Test.class);
+            mongoTemplate.updateFirst(query, update, Users.class);
+        } catch(Exception e) {
+            return false;
+        }
+        return true;
     }
 }

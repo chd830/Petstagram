@@ -163,7 +163,7 @@
 
         // firebase
         if (this.imgURL !== this.post.postImg){
-          const storageRef = firebase.storage().ref(this.userEmail + this.subject)
+          const storageRef = firebase.storage().ref(this.postNo)
           storageRef.put(this.imgFile)
           .then(() => {
             storageRef.getDownloadURL()
