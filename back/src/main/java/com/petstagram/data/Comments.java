@@ -17,7 +17,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 // ToString생성
 @ToString
-@Entity
 public class Comments {
     @Id
     private int commentNo;
