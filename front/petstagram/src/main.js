@@ -13,12 +13,14 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 // npm install --save bootstrap-vue
 import firebase from "firebase"
+// npm install --save firebase
 import datetime from "vue-datetime"
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+// firebase
 var firebaseConfig = {
-
+  
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
