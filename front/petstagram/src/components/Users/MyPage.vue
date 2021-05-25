@@ -16,11 +16,13 @@
         label="Age"
         v-model="userAge"
       ></v-text-field>
-      <v-text-field
+      <!-- <v-img src="https://firebasestorage.googleapis.com/v0/b/petstagram-6dd07.appspot.com/o/ab?alt=media&token=5c4f2514-7e27-4e72-88bd-d46f3cd2b487"></v-img> -->
+      <v-img :src="imageUrl"></v-img>
+      <!-- <v-text-field
         hide-details="auto"
         label="Image"
         v-model="userImg"
-      ></v-text-field>
+      ></v-text-field> -->
       <v-file-input
         @change="changeImg"
         :rules="rules"
@@ -54,43 +56,43 @@ export default {
         rules: [
           value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
         ],
-        userEmail: '',
+        userEmail: localStorage.getItem("userEmail"),
         userNickname: '',
         userAge: '',
         userImg: '',
         imageUrl: null
     }
   },
-  created() {
-    // console.log("USEREMAIL",localStorage.getItem("userEmail"))
-    this.$http.post('http://localhost:8000/api/v1/user/', {
-        userEmail: localStorage.getItem("userEmail")
-      }, 
-      { 
-        headers: { 'Content-Type': 'application/json' } 
-      },
-      {
-          withCredentials: true,
-      }).then((res) => {
-          this.userEmail = res.data.userEmail;
-          this.userNickname = res.data.userNickname;
-          this.userAge = res.data.userAge;
-          this.userImg = res.data.userImg;
-        // console.log(res.data)
-      })
+mounted() {
+  var data = firebase.storage().ref().child(this.userEmail)
+  data.getDownloadURL()
+  .then(function(url) {
+    //this.userImg를 못읽어서 이미지를 띄울 수 없음 값은 가져와짐!
+    // this.userImg = url
+    console.log(url)
+  })
+  .catch(function(err) {
+    console.log("ERR", err)
+  })
+},
+created() {
+
+  this.$http.post('http://localhost:8000/api/v1/user/', {
+      userEmail: this.userEmail
+    }, 
+    { 
+      headers: { 'Content-Type': 'application/json' } 
+    },
+    {
+        withCredentials: true,
+    }).then((res) => {
+        console.log(res.data)
+        this.userEmail = res.data.userEmail;
+        this.userNickname = res.data.userNickname;
+        this.userAge = res.data.userAge;
+    })
   },
   methods: {
-    // onClickImageUpload() {
-    //   this.$refs.imageInput.click();
-    // },
-    // onChangeImages(e) {
-    //     console.log(e.target.files)
-    //     const file = e.target.files[0]; // Get first index in files
-    //     this.imageUrl = URL.createObjectURL(file); // Create File URL
-    //     this.userImg = file
-    //     console.log(file)
-    //     console.log(this.imageUrl)
-    // },
     changeImg(file) {
       if (file) {
         this.imgURL = URL.createObjectURL(file)

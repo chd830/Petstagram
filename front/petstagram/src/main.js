@@ -18,9 +18,23 @@ import datetime from "vue-datetime"
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+
 // firebase
 var firebaseConfig = {
-  
+  apiKey: process.env.VUE_APP_APIKEY,
+  authDomain: process.env.VUE_APP_AUTHDOMAIN,
+  projectId: process.env.VUE_APP_PROJECTID,
+  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
+  appId: process.env.VUE_APP_APPID,
+  measurementId: process.env.VUE_APP_MEASUREMENTID,
+  // apiKey: "AIzaSyDOZddqqpsVfIzJSE1EWt8WEpqYVmdTY2M",
+  // authDomain: "petstagram-6dd07.firebaseapp.com",
+  // projectId: "petstagram-6dd07",
+  // storageBucket: "petstagram-6dd07.appspot.com",
+  // messagingSenderId: "208979939701",
+  // appId: "1:208979939701:web:2f63e48887ae1ac70cc33c",
+  // measurementId: "G-Y6PMK7XJKL"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
