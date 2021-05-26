@@ -1,32 +1,5 @@
 <template>
   <div>
-    <!-- 상위 로고 -->
-    <v-card
-      color="grey lighten-4"
-      flat
-      tile
-    >
-      <v-toolbar dense dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title>Petstagram</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon @click="insertposts">
-          <v-icon>note_add</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>settings</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </v-card>
-
     <!-- posts -->
     <v-container>
       <v-row>
