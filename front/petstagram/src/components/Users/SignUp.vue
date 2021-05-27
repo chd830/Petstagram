@@ -38,11 +38,6 @@
       </v-text-field>
     <input ref="imageInput" type="file" hidden @change="onChangeImages">
     <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
-    <!-- <v-file-input
-      accept="image/*"
-      label="Image"
-      @click="onClickImageUpload"
-    ></v-file-input> -->
     <v-img
       v-if="imageUrl" :src="imageUrl"
     ></v-img>
@@ -60,6 +55,7 @@
 
 <script>
 import router from '../../router/index.js'
+import firebase from "firebase"
 
 export default {
   name: "app",  
@@ -89,7 +85,9 @@ export default {
     onChangeImages(e) {
         console.log(e.target.files)
         const file = e.target.files[0]; // Get first index in files
+        console.log(file)
         this.imageUrl = URL.createObjectURL(file); // Create File URL
+        console.log(this.imageUrl)
     },
     increment() {
       this.userAge += 1
@@ -105,25 +103,34 @@ export default {
         alert('입력한 두 비밀번호가 일치하지 않습니다.')
         return
       }
-      this.$http.post('http://localhost:8000/api/v1/user/signup', {
-        userEmail: this.userEmail,
-        userNickname: this.userNickname,
-        userPwd : this.userPwd,
-        userImg: this.userImg
-      }, 
-      { 
-        headers: { 'Content-Type': 'application/json' } 
-      },
-      {
-          withCredentials: true,
-      }).then((res) => {
-        if(res.data == true) {
-          alert('회원가입이 완료되었습니다.')
-          router.push("/signin")
-        }
-        else {
-          alert('이미 있는 이메일 입니다.')
-        }
+      const storageRef = firebase.storage().ref(this.userEmail)
+      storageRef.put(this.imgFile)
+      .then(() => {
+        storageRef.getDownloadURL()
+        .then(url => {
+          // 동기 비동기 문제 해결할 것
+          this.imgURL = url
+          this.$http.post('http://localhost:8000/api/v1/user/signup', {
+            userEmail: this.userEmail,
+            userNickname: this.userNickname,
+            userImg: this.url,
+            userPwd : this.userPwd,
+          }, 
+          { 
+            headers: { 'Content-Type': 'application/json' } 
+          },
+          {
+              withCredentials: true,
+          }).then((res) => {
+            if(res.data == true) {
+              alert('회원가입이 완료되었습니다.')
+              router.push("/signin")
+            }
+            else {
+              alert('이미 있는 이메일 입니다.')
+            }
+          })
+        })
       })
     }
   }
