@@ -14,6 +14,10 @@
       SignIn
     </v-btn>
     &nbsp;&nbsp;&nbsp;
+    <v-btn v-on:click="google" color="primary" large outlined>
+      Google
+    </v-btn>
+    &nbsp;&nbsp;&nbsp;
     <v-btn v-on:click="signup" color="error" large outlined>
       SignUp
     </v-btn>
@@ -35,6 +39,17 @@ export default {
   methods: {
     signup() {
       router.push('/signup')
+    },
+    google() {
+      this.$http.get('http://localhost:8000/api/v1/auth/google', {
+        withCredentials: true
+      })
+      .then(() => {
+        console.log("GOOGLE")
+      })
+      .catch((err) => {
+        console.log(err)
+      }) 
     },
     signin() {
       this.$http.post('http://localhost:8000/api/v1/user/signin', {

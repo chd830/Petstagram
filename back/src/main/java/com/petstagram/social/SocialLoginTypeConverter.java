@@ -1,5 +1,6 @@
 package com.petstagram.social;
 
+import com.petstagram.data.SocialLoginType;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 

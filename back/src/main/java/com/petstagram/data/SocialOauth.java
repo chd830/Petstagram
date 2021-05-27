@@ -1,4 +1,6 @@
-package com.petstagram.social;
+package com.petstagram.data;
+
+import com.petstagram.social.GoogleOauth;
 
 public interface SocialOauth {
     /**

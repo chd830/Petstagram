@@ -1,5 +1,7 @@
-package com.petstagram.social;
+package com.petstagram.service;
 
+import com.petstagram.data.SocialLoginType;
+import com.petstagram.data.SocialOauth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -64,7 +64,7 @@ export default {
     }
   },
 mounted() {
-  var data = firebase.storage().ref().child(this.userEmail)
+  var data = firebase.storage().ref().child(/users/this.userEmail)
   data.getDownloadURL()
   .then(function(url) {
     //this.userImg를 못읽어서 이미지를 띄울 수 없음 값은 가져와짐!
@@ -76,7 +76,6 @@ mounted() {
   })
 },
 created() {
-
   this.$http.post('http://localhost:8000/api/v1/user/', {
       userEmail: this.userEmail
     }, 
@@ -100,7 +99,7 @@ created() {
       } else {this.imgURL=null}
     },
     update() {
-      const storageRef = firebase.storage().ref(this.userEmail)
+      const storageRef = firebase.storage().ref(users/this.userEmail)
       storageRef.put(this.userImg)
       .then(() => {
         storageRef.getDownloadURL()

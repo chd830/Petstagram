@@ -1,5 +1,7 @@
-package com.petstagram.social;
+package com.petstagram.controller;
 
+import com.petstagram.service.OauthService;
+import com.petstagram.data.SocialLoginType;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ public class OauthController {
      * 사용자로부터 SNS 로그인 요청을 Social Login Type 을 받아 처리
      * @param socialLoginType (GOOGLE, FACEBOOK, NAVER, KAKAO)
      */
-    @GetMapping(value = "/auth/{socialLoginType}")
+    @GetMapping(value = "/api/v1/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name = "socialLoginType") SocialLoginType socialLoginType) {
         log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", socialLoginType);
         oauthService.request(socialLoginType);
@@ -28,7 +30,7 @@ public class OauthController {
      * @param code API Server 로부터 넘어노는 code
      * @return SNS Login 요청 결과로 받은 Json 형태의 String 문자열 (access_token, refresh_token 등)
      */
-    @GetMapping(value = "/{socialLoginType}/callback")
+    @GetMapping(value = "/api/v1/{socialLoginType}/callback")
     public String callback(
             @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
             @RequestParam(name = "code") String code) {

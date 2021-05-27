@@ -1,4 +1,5 @@
 package com.petstagram.social;
+import com.petstagram.data.SocialOauth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

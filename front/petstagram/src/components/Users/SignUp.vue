@@ -103,7 +103,7 @@ export default {
         alert('입력한 두 비밀번호가 일치하지 않습니다.')
         return
       }
-      const storageRef = firebase.storage().ref(this.userEmail)
+      const storageRef = firebase.storage().ref(users/this.userEmail)
       storageRef.put(this.imgFile)
       .then(() => {
         storageRef.getDownloadURL()

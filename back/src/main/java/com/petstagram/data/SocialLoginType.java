@@ -1,4 +1,4 @@
-package com.petstagram.social;
+package com.petstagram.data;
 
 public enum SocialLoginType {
     GOOGLE,
