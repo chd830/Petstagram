@@ -1,23 +1,5 @@
 <template>
   <div>
-    <v-card
-      color="grey lighten-4"
-      flat
-      tile
-    >
-      <v-toolbar dense dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title @click="goback()" style="cursor:pointer">Petstagram</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </v-card>
-
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card ref="form">
@@ -168,13 +150,13 @@
         })
         // DateTime
         var createDate = new Date();
-        createDate = `${createDate.getFullYear()}/${createDate.getMonth()}/${createDate.getDate}/${createDate.getHours}:${createDate.getMinutes}:${createDate.getSeconds}`
+        createDate = `${createDate.getFullYear()}/${createDate.getMonth()}/${createDate.getDate()}/${createDate.getHours()}:${createDate.getMinutes()}:${createDate.getSeconds()}`
         const updateDate = createDate
         const postLike = 0;
         const commentNo = 0;
 
         // firebase
-        const storageRef = firebase.storage().ref(this.userEmail + this.subject)
+        const storageRef = firebase.storage().ref(`posts/test${new Date().toLocaleString()}`)
         storageRef.put(this.imgFile)
         .then(() => {
           storageRef.getDownloadURL()

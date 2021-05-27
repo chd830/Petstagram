@@ -1,23 +1,5 @@
 <template>
   <div>
-    <v-card
-      color="grey lighten-4"
-      flat
-      tile
-    >
-      <v-toolbar dense dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title @click="goback()" style="cursor:pointer">Petstagram</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </v-card>
-
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card ref="form">
@@ -159,11 +141,12 @@
       submit () {        
         // DateTime
         var updateDate = new Date()
-        updateDate = `${updateDate.getFullYear()}/${updateDate.getMonth()}/${updateDate.getDate}/${updateDate.getHours}:${updateDate.getMinutes}:${updateDate.getSeconds}`
+        updateDate = `${updateDate.getFullYear()}/${updateDate.getMonth()}/${updateDate.getDate()}/${updateDate.getHours()}:${updateDate.getMinutes()}:${updateDate.getSeconds()}`
 
         // firebase
         if (this.imgURL !== this.post.postImg){
-          const storageRef = firebase.storage().ref(this.userEmail + this.subject)
+          const storageRef = firebase.storage().ref(`posts/test${new Date().toLocaleString()}`)
+          firebase.storage().refFromURL(this.post.postImg).delete()
           storageRef.put(this.imgFile)
           .then(() => {
             storageRef.getDownloadURL()
