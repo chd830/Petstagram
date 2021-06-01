@@ -109,6 +109,7 @@
       rules: [
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
+      userEmail : "test",
       imgURL : null,
       imgFile : null,
       subject: null,
@@ -150,13 +151,13 @@
         })
         // DateTime
         var createDate = new Date();
-        createDate = `${createDate.getFullYear()}/${createDate.getMonth()}/${createDate.getDate()}/${createDate.getHours()}:${createDate.getMinutes()}:${createDate.getSeconds()}`
+        createDate = `${createDate.getFullYear()}.${createDate.getMonth()}.${createDate.getDate()}/${createDate.getHours()}.${createDate.getMinutes()}.${createDate.getSeconds()}`
         const updateDate = createDate
         const postLike = 0;
         const commentNo = 0;
 
         // firebase
-        const storageRef = firebase.storage().ref(`posts/test${new Date().toLocaleString()}`)
+        const storageRef = firebase.storage().ref(`posts/${this.userEmail}/${createDate}`)
         storageRef.put(this.imgFile)
         .then(() => {
           storageRef.getDownloadURL()
@@ -179,7 +180,7 @@
               categoryName : this.category,
               hashtagContent : this.hashtag,
               tagUserEmail : this.taguser,
-              userEmail : "test"
+              userEmail : this.userEmail
             })
             .then(() => {
               router.push("/posts")
