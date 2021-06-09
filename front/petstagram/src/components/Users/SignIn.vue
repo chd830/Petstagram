@@ -41,15 +41,16 @@ export default {
       router.push('/signup')
     },
     google() {
-      this.$http.get('http://localhost:8000/api/v1/auth/google', {
-        withCredentials: true
-      })
-      .then(() => {
-        console.log("GOOGLE")
-      })
-      .catch((err) => {
-        console.log(err)
-      }) 
+      router.push('http://localhost:8080/oauth2/authorization/google')
+      // this.$http.get('http://localhost:8000/api/v1/auth/google', {
+      //   withCredentials: true
+      // })
+      // .then(() => {
+      //   console.log("GOOGLE")
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // }) 
     },
     signin() {
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
