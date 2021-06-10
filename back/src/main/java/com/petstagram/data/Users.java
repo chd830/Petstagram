@@ -35,6 +35,11 @@ public class Users {
     @Column(nullable = false)
     private Role role;
 
+    public Users update(String userNickname, String userImg) {
+        this.userNickname = userNickname;
+        this.userImg = userImg;
+        return this;
+    }
     public String getRoleKey() {
         return this.role.getKey();
     }
