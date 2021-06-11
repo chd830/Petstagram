@@ -49,7 +49,7 @@ public class PostsController {
 
     @GetMapping("/api/v1/posts/userEmail")
     public ResponseEntity<Map<String, Object>> getUsers(@RequestParam String userEmail){
-        Posts posts = postService.getPosts(userEmail);
+        List<Posts> posts = postService.getByuserEmail(userEmail);
         return handleSuccess(posts);
     }
 

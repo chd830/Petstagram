@@ -7,11 +7,12 @@
         <v-col
           v-for="post in posts"
           :key="post.postNo"
-          cols="12"
+          cols=auto
         >
           <v-card>
             <v-img
-              height="450px"
+              max-height="500px"
+              max-width="500px"
               :src="post.postImg"
               :alt="post.postSubject"
               style="object-fit:cover"
@@ -27,35 +28,6 @@
         </v-col>
       </v-row>
     </v-container>
-    
-    <!-- footer -->
-    <v-footer
-    absolute>
-      <v-bottom-navigation
-        dark
-        shift
-      >
-        <v-btn>
-          <span>Home</span>
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Chat</span>
-          <v-icon>mdi-music-note</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Book</span>
-          <v-icon>mdi-book</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>My Page</span>
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
-    </v-footer>
   </div>
 </template>
 

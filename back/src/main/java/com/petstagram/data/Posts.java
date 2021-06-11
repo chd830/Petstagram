@@ -31,7 +31,7 @@ public class Posts {
     private String postUpdateDate;
 
     // Comments
-    private int commentNo;
+    private List<Integer> commentNo;
 
     // Categories
     private String categoryName;

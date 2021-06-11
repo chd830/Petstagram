@@ -118,6 +118,8 @@
       category : "",
       hashtag : [],
       taguser : [],
+      latitude : null,
+      longitude : null
     }),
 
     watch: {
@@ -139,22 +141,20 @@
       resetForm () {
         router.push("/posts")
       },
-      submit () {        
+      getposition() {
         // get position
-        var latitude;
-        var longitude;
         navigator.geolocation.getCurrentPosition(pos => {
-        latitude = pos.coords.latitude;
-        longitude = pos.coords.longitude;
+          this.latitude = pos.coords.latitude;
+          this.longitude = pos.coords.longitude;
         }, err => {
           console.log(err.message)
         })
+      },
+      submit () {        
         // DateTime
         var createDate = new Date();
         createDate = `${createDate.getFullYear()}.${createDate.getMonth()}.${createDate.getDate()}/${createDate.getHours()}.${createDate.getMinutes()}.${createDate.getSeconds()}`
         const updateDate = createDate
-        const postLike = 0;
-        const commentNo = 0;
 
         // firebase
         const storageRef = firebase.storage().ref(`posts/${this.userEmail}/${createDate}`)
@@ -170,13 +170,13 @@
               postNo : -1,
               postSubject : this.subject,
               postContent : this.content,
-              postLike : postLike,
+              postLike : [],
               postImg : this.imgURL,
-              postLng : longitude,
-              postLat : latitude,
+              postLng : this.longitude,
+              postLat : this.latitude,
               postCreateDate : createDate,
               postUpdateDate : updateDate,
-              commentNo : commentNo,
+              commentNo : [],
               categoryName : this.category,
               hashtagContent : this.hashtag,
               tagUserEmail : this.taguser,
@@ -190,5 +190,8 @@
         })
       },
     },
+    mounted() {
+      this.getposition();
+    }
   }
 </script>

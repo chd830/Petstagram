@@ -2,10 +2,11 @@
   <div>
       <v-card>
         <v-img
-          height="450px"
+          height="700px"
+          width="700px"
           :src="post.postImg"
           :alt="post.postSubject"
-          style="object-fit:cover"  
+          style="object-fit:cover"
         >
           <span
             class="headline white--text pl-4 pt-4"
@@ -13,38 +14,9 @@
           ></span>
         </v-img>
       </v-card>
-      <v-btn icon @click="updatepost">
+      <v-btn @click="updatepost">
         Update
       </v-btn>
-
-    <!-- footer -->
-    <v-footer
-    absolute>
-      <v-bottom-navigation
-        dark
-        shift
-      >
-        <v-btn>
-          <span>Home</span>
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Chat</span>
-          <v-icon>mdi-music-note</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>Book</span>
-          <v-icon>mdi-book</v-icon>
-        </v-btn>
-
-        <v-btn>
-          <span>My Page</span>
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
-    </v-footer>
   </div>
 </template>
 
