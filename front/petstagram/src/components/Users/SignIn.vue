@@ -41,7 +41,8 @@ export default {
       router.push('/signup')
     },
     google() {
-      router.push('http://localhost:8080/oauth2/authorization/google')
+      window.location.href='http://localhost:8000/oauth/google'
+      // window.location.href = 'http://localhost:8000/oauth2/authoriztion/google'
       // this.$http.get('http://localhost:8000/api/v1/auth/google', {
       //   withCredentials: true
       // })
@@ -53,6 +54,7 @@ export default {
       // }) 
     },
     signin() {
+      console.log('click')
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
         userEmail: this.userEmail,
         userPwd : this.userPwd,

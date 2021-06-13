@@ -99,6 +99,7 @@ export default {
       router.push('/signin')
     },
     signup() {
+      console.log('click')
       if(this.userPwd != this.userPwd2) {
         alert('입력한 두 비밀번호가 일치하지 않습니다.')
         return
@@ -114,7 +115,7 @@ export default {
             userEmail: this.userEmail,
             userNickname: this.userNickname,
             userImg: this.url,
-            userPwd : this.userPwd,
+            userPwd : this.userPdwd,
           }, 
           { 
             headers: { 'Content-Type': 'application/json' } 

@@ -1,7 +1,6 @@
 package com.petstagram.security.oauth2;
 
 import com.petstagram.data.Users;
-import com.petstagram.security.oauth2.user.SessionUser;
 import com.petstagram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
