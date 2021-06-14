@@ -41,7 +41,7 @@ export default {
       router.push('/signup')
     },
     google() {
-      window.location.href='http://localhost:8000/oauth/google'
+      window.location.href='http://localhost:8080/auth/google/callback'
     },
     signin() {
       console.log('click')
@@ -50,7 +50,7 @@ export default {
         userPwd : this.userPwd,
       }, 
       { 
-        headers: { 'Content-Type': 'text/plain' } 
+        headers: { 'Content-Type': 'application/json' } 
       },
       {
           withCredentials: true,

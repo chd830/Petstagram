@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
 public class JwtAuthenticationController {
 	
 	@Autowired
@@ -35,7 +34,7 @@ public class JwtAuthenticationController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/v1/user/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
@@ -58,7 +57,7 @@ public class JwtAuthenticationController {
         }
     }
 	
-	@RequestMapping(value = "/user/signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/v1/user/signup", method = RequestMethod.POST)
 	public ResponseEntity<Boolean> saveUser(@RequestBody Users user) throws Exception {
 		try {
 			boolean check = userDetailsService.save(user);

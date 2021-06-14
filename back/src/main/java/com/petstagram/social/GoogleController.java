@@ -36,12 +36,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class GoogleController {
 	
-	static private final String client_id = "398752773538-0j3eaebt77ki6r9p20e0q6fg0fljc16l.apps.googleusercontent.com";
-	static private final String client_secret = "yqpP_eE9QYwBQW8UBRjVPjEU";
-	static private final String redirect_uri = "https://k3c104.p.ssafy.io/api/google/googlecallback";
+	static private final String client_id = "547900846133-ioo7t5i7eeal0b62uqshq2bje70g2hhi.apps.googleusercontent.com";
+	static private final String client_secret = "1BIsFcGsIEr7VnXjqnJT7nro";
+	static private final String redirect_uri = "http://localhost:8080/auth/google/callback";
 	
 	@Autowired
 	private UserService userService;
@@ -105,7 +105,7 @@ public class GoogleController {
                     .loadUserByUsername(user.getUserEmail());
 			String loginToken = jwtTokenUtil.generateToken(userDetails);
         	System.out.println(loginToken);
-        	url = "https://k3c104.p.ssafy.io/intermediate?token="+loginToken+"&useremail="+email;
+        	url = "http://localhost:8080/intermediate?token="+loginToken+"&useremail="+email;
 		}
 		else {
 			// user 등록
@@ -123,8 +123,8 @@ public class GoogleController {
                     .loadUserByUsername(user.getUserEmail());
 			String loginToken = jwtTokenUtil.generateToken(userDetails);
         	System.out.println(loginToken);
-        	
-//        	url = "https://k3c104.p.ssafy.io/intermediate?token="+loginToken+"&useremail="+email+"&password="+pass;
+
+        	url = "http://localhost:8080/intermediate?token="+loginToken+"&useremail="+email+"&password="+pass;
 //			url = "http://localhost:3000/login";
 		}
 		response.sendRedirect(url);

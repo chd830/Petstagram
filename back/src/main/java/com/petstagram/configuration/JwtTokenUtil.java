@@ -70,8 +70,8 @@ public class JwtTokenUtil implements Serializable {
         getUser.setUserEmail(userDetails.getUsername());
         Users user = userService.getUsers(getUser);
 //        claims.put("exp", now);
-        claims.put("useremail", userDetails.getUsername());
-        claims.put("username", user.getUserNickname());
+        claims.put("userEmail", userDetails.getUsername());
+        claims.put("userNickname", user.getUserNickname());
         return doGenerateToken(claims, headers);
     }
 
