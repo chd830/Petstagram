@@ -29,6 +29,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		Users getUser = new Users();
 		getUser.setUserEmail(email);
 		Users user = userService.getUsers(getUser);
+		System.out.println("DETAIL SERVICE: "+user);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with email: " + email);
         } else {
@@ -43,6 +44,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	 * return type: boolean
 	 */
 	public boolean save(Users user) {
+		System.out.println(user);
 		Users newUser = userService.getUsers(user);
 		if(newUser != null) {
 			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));

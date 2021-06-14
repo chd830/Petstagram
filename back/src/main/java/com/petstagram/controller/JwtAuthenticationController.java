@@ -36,15 +36,19 @@ public class JwtAuthenticationController {
 	
 	@RequestMapping(value = "/api/v1/user/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+		System.out.println(authenticationRequest);
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService
             .loadUserByUsername(authenticationRequest.getEmail());
 //        System.out.println(userDetails.getUsername());
 //        System.out.println(userDetails.getPassword());
+		System.out.println("USER DETAIL: "+userDetails);
 		Users getUSer = new Users();
 		getUSer.setUserEmail(authenticationRequest.getEmail());
+		System.out.println("USERS: "+getUSer);
         Users user = userService.getUsers(getUSer);
+		System.out.println("CONTROLLER: "+user);
         if(user != null) {
         	final String loginToken = jwtTokenUtil.generateToken(userDetails);
             

@@ -41,13 +41,14 @@ export default {
       router.push('/signup')
     },
     google() {
-      window.location.href='http://localhost:8080/auth/google/callback'
+      //  router.push('http://localhost:8080/oauth2/authorization/google')
+      window.location.href='http://localhost:8080/oauth2/authorization/google'
     },
     signin() {
       console.log('click')
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
-        userEmail: this.userEmail,
-        userPwd : this.userPwd,
+        email: this.userEmail,
+        password : this.userPwd,
       }, 
       { 
         headers: { 'Content-Type': 'application/json' } 

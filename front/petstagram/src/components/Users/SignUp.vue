@@ -115,7 +115,7 @@ export default {
             userEmail: this.userEmail,
             userNickname: this.userNickname,
             userImg: this.url,
-            userPwd : this.userPdwd,
+            userPwd : this.userPwd,
           }, 
           { 
             headers: { 'Content-Type': 'application/json' } 
