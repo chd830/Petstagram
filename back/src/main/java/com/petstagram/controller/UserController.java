@@ -21,6 +21,7 @@ public class UserController {
     public ResponseEntity<String> test(@RequestParam String str) {
         return new ResponseEntity<>(str, HttpStatus.OK);
     }
+
     @PostMapping("/api/v1/user")
     public ResponseEntity<Users> getUser(@RequestBody Users user) {
         return new ResponseEntity<>(userService.getUsers(user), HttpStatus.OK);

@@ -26,8 +26,6 @@ public class UserService {
 
     // SELECT
     public Users getUsers(Users user) {
-        if(this.getAllUsers() == null)
-            System.out.println("연결안됨");
 //        return mongoTemplate.findById("userEmail", Users.class);
         for(Users u : this.getAllUsers()) {
             if(u.getUserEmail().equals(user.getUserEmail()))

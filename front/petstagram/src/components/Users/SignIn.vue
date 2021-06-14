@@ -42,16 +42,6 @@ export default {
     },
     google() {
       window.location.href='http://localhost:8000/oauth/google'
-      // window.location.href = 'http://localhost:8000/oauth2/authoriztion/google'
-      // this.$http.get('http://localhost:8000/api/v1/auth/google', {
-      //   withCredentials: true
-      // })
-      // .then(() => {
-      //   console.log("GOOGLE")
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // }) 
     },
     signin() {
       console.log('click')
@@ -60,7 +50,7 @@ export default {
         userPwd : this.userPwd,
       }, 
       { 
-        headers: { 'Content-Type': 'application/json' } 
+        headers: { 'Content-Type': 'text/plain' } 
       },
       {
           withCredentials: true,
