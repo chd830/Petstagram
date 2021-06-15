@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @Document(collection = "users")
 // Getter생성
@@ -18,7 +19,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 // ToString생성
 @ToString
-@Entity
 @XmlRootElement
 public class Users {
     @Id
@@ -30,5 +30,5 @@ public class Users {
     private boolean isPublic;
 
     // Friends
-    private String friendUserEmail;
+    private List<String> friendUserEmail;
 }
