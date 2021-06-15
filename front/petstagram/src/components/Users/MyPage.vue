@@ -77,7 +77,7 @@ mounted() {
 },
 created() {
   this.$http.post('http://localhost:8000/api/v1/user/getuser', {
-      email: this.userEmail,
+      userEmail: this.userEmail,
     }, 
     { 
       headers: { 'Content-Type': 'application/json' } 
@@ -93,8 +93,9 @@ created() {
         userImg: null
         }
       */
-        console.log(res.data)
-        this.userNickname = res.data.username;
+        console.log("DATA: ",res.data)
+        this.userNickname = res.data.userNickname;
+        this.userImg = res.data.userImg;
         this.userAge = res.data.userAge;
     })
   },
@@ -106,7 +107,7 @@ created() {
       } else {this.imgURL=null}
     },
     update() {
-      const storageRef = firebase.storage().ref(`users/this.userEmail`)
+      const storageRef = firebase.storage().ref(`users/${this.userEmail}`)
       storageRef.put(this.userImg)
       .then(() => {
         storageRef.getDownloadURL()

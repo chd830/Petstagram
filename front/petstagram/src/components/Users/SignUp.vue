@@ -104,7 +104,7 @@ export default {
         alert('입력한 두 비밀번호가 일치하지 않습니다.')
         return
       }
-      const storageRef = firebase.storage().ref(`users/this.userEmail`)
+      const storageRef = firebase.storage().ref(`users/${this.userEmail}`)
       storageRef.put(this.imgFile)
       .then(() => {
         storageRef.getDownloadURL()
@@ -114,7 +114,7 @@ export default {
           this.$http.post('http://localhost:8000/api/v1/user/signup', {
             userEmail: this.userEmail,
             userNickname: this.userNickname,
-            userImg: this.url,
+            userImg: this.imgURL,
             userPwd : this.userPwd,
           }, 
           { 

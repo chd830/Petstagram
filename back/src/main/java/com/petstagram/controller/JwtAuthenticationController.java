@@ -35,21 +35,25 @@ public class JwtAuthenticationController {
 	private UserService userService;
 
 	@RequestMapping(value="/api/v1/user/getuser", method = RequestMethod.POST)
-	public ResponseEntity<?> getUser(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		// password의 값이 없을 때에는 접근이 불가능
-		authenticationRequest.setPassword("abcd");
-		System.out.println(authenticationRequest);
-		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getEmail());
-		Users user = new Users();
-		user.setUserEmail(authenticationRequest.getEmail());
-		Users getUser = userService.getUsers(user);
-		final String loginToken = jwtTokenUtil.generateToken(userDetails);
-
-		System.out.println("이메일:"+jwtTokenUtil.getEmailByToken(loginToken));
-		System.out.println("닉네임:"+jwtTokenUtil.getNicknameByToken(loginToken));
-		return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), getUser.getUserAge(), getUser.getUserImg()));
+	public ResponseEntity<?> getUser(@RequestBody Users user) throws Exception {
+		System.out.println(user);
+		System.out.println(userService.getUsers(user));
+		return new ResponseEntity<Users>(userService.getUsers(user), HttpStatus.OK);
+//		Users user = new Users();
+//		user.setUserEmail(authenticationRequest.getEmail());
+//		Users getUser = userService.getUsers(user);
+//		// password의 값이 없을 때에는 접근이 불가능
+//		authenticationRequest.setPassword(getUser.getUserPwd());
+//		System.out.println("REQUEST: "+authenticationRequest);
+//		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+//		final UserDetails userDetails = userDetailsService
+//				.loadUserByUsername(authenticationRequest.getEmail());
+//		System.out.println("USERDEAILT: "+userDetails);
+//		final String loginToken = jwtTokenUtil.generateToken(userDetails);
+//
+//		System.out.println("이메일:"+jwtTokenUtil.getEmailByToken(loginToken));
+//		System.out.println("닉네임:"+jwtTokenUtil.getNicknameByToken(loginToken));
+//		return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), getUser.getUserAge(), getUser.getUserImg()));
 	}
 
 	@RequestMapping(value = "/api/v1/user/signin", method = RequestMethod.POST)
@@ -90,8 +94,10 @@ public class JwtAuthenticationController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
+			System.out.println("DISABLED");
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
+			System.out.println("INVALID");
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }

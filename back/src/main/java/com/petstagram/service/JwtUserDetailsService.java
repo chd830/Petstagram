@@ -46,7 +46,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	 * return type: boolean
 	 */
 	public boolean save(Users user) {
-		System.out.println(user);
+		System.out.println("SAVE: "+user);
 		Users newUser = userService.getUsers(user);
 		if(newUser != null) {
 			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
@@ -58,6 +58,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 			newUser.setUserAge(user.getUserAge());
 			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
 			newUser.setUserImg(user.getUserImg());
+			newUser.setRole(Role.USER);
 			userService.insert(newUser);
 			return true;
 		}
