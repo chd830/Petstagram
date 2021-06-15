@@ -111,7 +111,7 @@ public class JwtTokenUtil implements Serializable {
     
     public String getNicknameByToken(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-        return (String) claims.getBody().get("userName");
+        return (String) claims.getBody().get("userNickname");
 //    	Claims claims = Jwts.parser()
 //    			.setSigningKey(secret)
 //    			.parseClaimsJws(token)

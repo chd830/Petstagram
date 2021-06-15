@@ -33,29 +33,43 @@ public class JwtAuthenticationController {
 	private JwtUserDetailsService userDetailsService;
 	@Autowired
 	private UserService userService;
-	
+
+	@RequestMapping(value="/api/v1/user/getuser", method = RequestMethod.POST)
+	public ResponseEntity<?> getUser(@RequestBody JwtRequest authenticationRequest) throws Exception {
+		// password의 값이 없을 때에는 접근이 불가능
+		authenticationRequest.setPassword("abcd");
+		System.out.println(authenticationRequest);
+		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+		final UserDetails userDetails = userDetailsService
+				.loadUserByUsername(authenticationRequest.getEmail());
+		Users user = new Users();
+		user.setUserEmail(authenticationRequest.getEmail());
+		Users getUser = userService.getUsers(user);
+		final String loginToken = jwtTokenUtil.generateToken(userDetails);
+
+		System.out.println("이메일:"+jwtTokenUtil.getEmailByToken(loginToken));
+		System.out.println("닉네임:"+jwtTokenUtil.getNicknameByToken(loginToken));
+		return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), getUser.getUserAge(), getUser.getUserImg()));
+	}
+
 	@RequestMapping(value = "/api/v1/user/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+
 		System.out.println(authenticationRequest);
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
-        final UserDetails userDetails = userDetailsService
+        UserDetails userDetails = userDetailsService
             .loadUserByUsername(authenticationRequest.getEmail());
-//        System.out.println(userDetails.getUsername());
-//        System.out.println(userDetails.getPassword());
-		System.out.println("USER DETAIL: "+userDetails);
 		Users getUSer = new Users();
 		getUSer.setUserEmail(authenticationRequest.getEmail());
-		System.out.println("USERS: "+getUSer);
         Users user = userService.getUsers(getUSer);
-		System.out.println("CONTROLLER: "+user);
         if(user != null) {
         	final String loginToken = jwtTokenUtil.generateToken(userDetails);
             
             System.out.println("이메일:"+jwtTokenUtil.getEmailByToken(loginToken));
             System.out.println("닉네임:"+jwtTokenUtil.getNicknameByToken(loginToken));
 
-            return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), true));
+			return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), user.getUserAge(), user.getUserImg()));
         } else {
         	return ResponseEntity.ok(null);
         }

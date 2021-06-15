@@ -76,8 +76,8 @@ mounted() {
   })
 },
 created() {
-  this.$http.post('http://localhost:8000/api/v1/user/', {
-      userEmail: this.userEmail
+  this.$http.post('http://localhost:8000/api/v1/user/getuser', {
+      email: this.userEmail,
     }, 
     { 
       headers: { 'Content-Type': 'application/json' } 
@@ -85,9 +85,16 @@ created() {
     {
         withCredentials: true,
     }).then((res) => {
+      /*
+      {
+        jwttoken: "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFM1MTIifQ.eyJ1c2VyTml…w1scoJQfuLYQPly_vxCrFjpZiXc_rug6IA-aCUD6eOhy1fZqQ", 
+        username: "cd", 
+        userAge: 0, 
+        userImg: null
+        }
+      */
         console.log(res.data)
-        this.userEmail = res.data.userEmail;
-        this.userNickname = res.data.userNickname;
+        this.userNickname = res.data.username;
         this.userAge = res.data.userAge;
     })
   },

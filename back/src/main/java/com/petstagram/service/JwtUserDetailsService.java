@@ -2,6 +2,7 @@ package com.petstagram.service;
 
 import java.util.ArrayList;
 
+import com.petstagram.data.Role;
 import com.petstagram.data.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +30,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		Users getUser = new Users();
 		getUser.setUserEmail(email);
 		Users user = userService.getUsers(getUser);
+		user.setRole(Role.USER);
 		System.out.println("DETAIL SERVICE: "+user);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with email: " + email);
@@ -53,6 +55,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 			newUser = new Users();
 			newUser.setUserEmail(user.getUserEmail());
 			newUser.setUserNickname(user.getUserNickname());
+			newUser.setUserAge(user.getUserAge());
 			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
 			newUser.setUserImg(user.getUserImg());
 			userService.insert(newUser);
