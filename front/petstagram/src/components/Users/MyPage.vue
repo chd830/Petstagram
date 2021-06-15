@@ -16,8 +16,7 @@
         label="Age"
         v-model="userAge"
       ></v-text-field>
-      <!-- <v-img src="https://firebasestorage.googleapis.com/v0/b/petstagram-6dd07.appspot.com/o/ab?alt=media&token=5c4f2514-7e27-4e72-88bd-d46f3cd2b487"></v-img> -->
-      <v-img :src="imageUrl"></v-img>
+      <v-img :src="userImg"></v-img>
       <!-- <v-text-field
         hide-details="auto"
         label="Image"
@@ -64,15 +63,17 @@ export default {
     }
   },
 mounted() {
-  var data = firebase.storage().ref().child(`users/${this.userEmail}`)
-  data.getDownloadURL()
-  .then(function(url) {
-    //this.userImg를 못읽어서 이미지를 띄울 수 없음 값은 가져와짐!
-    // this.userImg = url
-    console.log(url)
-  })
-  .catch(function(err) {
-    console.log("ERR", err)
+  this.$nextTick(function() {
+    var data = firebase.storage().ref().child(`users/${this.userEmail}`)
+    data.getDownloadURL()
+    .then(function(url) {
+      //this.userImg를 못읽어서 이미지를 띄울 수 없음 값은 가져와짐!
+      this.userImg = url
+      console.log("MOUNTED: ",url)
+    })
+    .catch(function(err) {
+      console.log("ERR", err)
+    })
   })
 },
 created() {
