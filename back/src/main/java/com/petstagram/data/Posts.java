@@ -23,7 +23,7 @@ public class Posts {
     private int postNo;
     private String postSubject;
     private String postContent;
-    private int postLike;
+    private List<String> postLike;
     private String postImg;
     private double postLng;
     private double postLat;
@@ -31,7 +31,8 @@ public class Posts {
     private String postUpdateDate;
 
     // Comments
-    private int commentNo;
+//    delete?
+    private List<Integer> commentNo;
 
     // Categories
     private String categoryName;
