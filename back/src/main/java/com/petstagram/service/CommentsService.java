@@ -55,6 +55,16 @@ public class CommentsService {
         return null;
     }
 
+    public List<Comments> getByPostNo(int postNo){
+        try{
+            List<Comments> comments = mongoTemplate.find(new Query().addCriteria(Criteria.where("postNo").is(postNo)), Comments.class);
+            return comments;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean insert(Comments comments){
         try{
             mongoTemplate.insert(comments);
@@ -74,8 +84,23 @@ public class CommentsService {
 
             update.set("commentContent", comments.getCommentContent());
             update.set("commentUpdateDate", comments.getCommentUpdateDate());
-            update.set("commentLike", comments.getCommentLike());
 
+            mongoTemplate.updateFirst(query, update, Comments.class);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateCommentLike(Comments comments){
+        try{
+            Criteria criteria = new Criteria("commentNo");
+            criteria.is(comments.getCommentNo());
+            Query query = new Query(criteria);
+            Update update = new Update();
+
+            update.set("commentLike", comments.getCommentLike());
 
             mongoTemplate.updateFirst(query, update, Comments.class);
             return true;

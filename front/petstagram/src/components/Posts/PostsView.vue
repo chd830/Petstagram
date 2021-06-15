@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- posts -->
-    <v-container>
+    <v-container style="margin:auto">
       <v-row>
         <v-spacer></v-spacer>
         <v-col
           v-for="post in posts"
           :key="post.postNo"
-          cols=auto
+          cols=4
         >
           <v-card>
             <v-img
@@ -23,7 +23,6 @@
                 v-text="post.postSubject"
               ></span>
             </v-img>
-
           </v-card>
         </v-col>
       </v-row>

@@ -154,7 +154,6 @@
         // DateTime
         var createDate = new Date();
         createDate = `${createDate.getFullYear()}.${createDate.getMonth()}.${createDate.getDate()}/${createDate.getHours()}.${createDate.getMinutes()}.${createDate.getSeconds()}`
-        const updateDate = createDate
 
         // firebase
         const storageRef = firebase.storage().ref(`posts/${this.userEmail}/${createDate}`)
@@ -175,7 +174,7 @@
               postLng : this.longitude,
               postLat : this.latitude,
               postCreateDate : createDate,
-              postUpdateDate : updateDate,
+              postUpdateDate : createDate,
               commentNo : [],
               categoryName : this.category,
               hashtagContent : this.hashtag,

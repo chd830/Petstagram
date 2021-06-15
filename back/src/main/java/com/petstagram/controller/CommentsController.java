@@ -44,6 +44,12 @@ public class CommentsController {
         return handleSuccess(comments);
     }
 
+    @GetMapping("/api/v1/comments/postNo")
+    public ResponseEntity<Map<String, Object>> getByPosts(@RequestParam int postNo) {
+        List<Comments> comments = commentService.getByPostNo(postNo);
+        return handleSuccess(comments);
+    }
+
     @PostMapping("/api/v1/comments/insert")
     public ResponseEntity<Map<String, Object>> insertComment(@RequestBody Comments comments) {
         int commentNo = commentService.getAll().size() + 1;
@@ -58,6 +64,11 @@ public class CommentsController {
     @PostMapping("/api/v1/comments/update")
     public ResponseEntity<Map<String, Object>> updateComment(@RequestBody Comments comments) {
         return handleSuccess(commentService.update(comments));
+    }
+
+    @PostMapping("/api/v1/comments/updatelike")
+    public ResponseEntity<Map<String, Object>> updateCommentLike(@RequestBody Comments comments) {
+        return handleSuccess(commentService.updateCommentLike(comments));
     }
 
     public ResponseEntity<Map<String, Object>> handleSuccess(Object data) {

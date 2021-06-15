@@ -53,6 +53,11 @@ public class PostsController {
         return handleSuccess(posts);
     }
 
+    @PostMapping("/api/v1/posts/updatepostlike")
+    public ResponseEntity<Map<String, Object>> updatePostLike(@RequestBody Posts posts){
+        return handleSuccess(postService.updatePostLike(posts));
+    }
+
     public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("state", "ok");
