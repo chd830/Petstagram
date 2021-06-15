@@ -52,14 +52,16 @@ public class JwtUserDetailsService implements UserDetailsService {
 			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
 			return userService.updateUsers(newUser);
 		} else {
-			newUser = new Users();
-			newUser.setUserEmail(user.getUserEmail());
-			newUser.setUserNickname(user.getUserNickname());
-			newUser.setUserAge(user.getUserAge());
-			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
-			newUser.setUserImg(user.getUserImg());
-			newUser.setRole(Role.USER);
-			userService.insert(newUser);
+//			newUser = new Users();
+//			newUser.setUserEmail(user.getUserEmail());
+//			newUser.setUserNickname(user.getUserNickname());
+//			newUser.setUserAge(user.getUserAge());
+//			newUser.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
+//			newUser.setUserImg(user.getUserImg());
+//			newUser.setRole(Role.USER);
+			user.setUserPwd(bcryptEncoder.encode(user.getUserPwd()));
+			user.setRole(Role.USER);
+			userService.insert(user);
 			return true;
 		}
 	}

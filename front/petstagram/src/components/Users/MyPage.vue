@@ -64,7 +64,7 @@ export default {
     }
   },
 mounted() {
-  var data = firebase.storage().ref().child(`users/this.userEmail`)
+  var data = firebase.storage().ref().child(`users/${this.userEmail}`)
   data.getDownloadURL()
   .then(function(url) {
     //this.userImg를 못읽어서 이미지를 띄울 수 없음 값은 가져와짐!
@@ -112,6 +112,7 @@ created() {
       .then(() => {
         storageRef.getDownloadURL()
         .then(url => {
+          console.log("URL: ",url);
           // 동기 비동기 문제 해결할 것
           this.imgURL = url
           this.$http.post('http://localhost:8000/api/v1/user/update', {
@@ -127,7 +128,7 @@ created() {
               withCredentials: true,
           }).then(() => {
             alert('개인정보 변경이 완료되었습니다.')
-            router.push("/signin")
+            // router.push("/signin")
           })
         })
       })
