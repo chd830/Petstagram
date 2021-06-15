@@ -75,7 +75,7 @@ public class JwtAuthenticationController {
 
 			return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), user.getUserAge(), user.getUserImg()));
         } else {
-        	return ResponseEntity.ok(null);
+        	return new ResponseEntity<Boolean>(false, HttpStatus.OK);
         }
     }
 	

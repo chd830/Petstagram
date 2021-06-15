@@ -60,7 +60,8 @@ export default {
         if(res.data) {
           localStorage.setItem("userEmail", this.userEmail)
           alert('로그인이 완료되었습니다.')
-          router.push("/")
+          window.location.href='/'
+          // router.push("/")
         }
         else {
           alert('다시 로그인해 주세요.')

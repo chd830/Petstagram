@@ -52,14 +52,14 @@ export default {
   name: "app",  
   data() {
     return {
-        rules: [
-          value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
-        ],
-        userEmail: localStorage.getItem("userEmail"),
-        userNickname: '',
-        userAge: '',
-        userImg: '',
-        imageUrl: null
+      rules: [
+        value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
+      ],
+      userEmail: localStorage.getItem("userEmail"),
+      userNickname: '',
+      userAge: '',
+      userImg: '',
+      imageUrl: null
     }
   },
 mounted() {
