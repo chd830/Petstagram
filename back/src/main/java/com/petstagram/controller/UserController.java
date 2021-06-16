@@ -17,7 +17,7 @@ public class UserController {
 
     private static UserService userService = new UserService();
 
-    @GetMapping("/api/v1/test")
+  @GetMapping("/api/v1/test")
     public ResponseEntity<String> test(@RequestParam String str) {
         return new ResponseEntity<>(str, HttpStatus.OK);
     }
@@ -25,9 +25,8 @@ public class UserController {
     @PostMapping("/api/v1/user")
     public ResponseEntity<Users> getUser(@RequestBody Users user) {
         System.out.println(user);
-        return new ResponseEntity<>(userService.getUsers(user), HttpStatus.OK);
-    }
 
+      
 //    @PostMapping( "/api/v1/user/signup")
 //    public ResponseEntity<Boolean> signup(@RequestBody Users user) {
 //        System.out.println(user);

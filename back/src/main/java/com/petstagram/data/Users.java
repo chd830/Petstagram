@@ -43,15 +43,4 @@ public class Users {
     public String getRoleKey() {
         return this.role.getKey();
     }
-//    @Builder
-//    public Users(String userEmail, String userNickname, String userPwd, int userAge, String userImg, boolean isPublic, List<String> friendUserEmail, Role role) {
-//        this.userEmail = userEmail;
-//        this.userNickname = userNickname;
-//        this.userPwd = userPwd;
-//        this.userAge = userAge;
-//        this.userImg = userImg;
-//        this.isPublic = isPublic;
-//        this.friendUserEmail = friendUserEmail;
-//        this.role = role;
-//    }
 }
