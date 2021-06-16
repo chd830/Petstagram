@@ -109,6 +109,7 @@
       rules: [
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
+      userEmail : "test",
       imgURL : null,
       imgFile : null,
       subject: null,
@@ -141,12 +142,12 @@
       submit () {        
         // DateTime
         var updateDate = new Date()
-        updateDate = `${updateDate.getFullYear()}/${updateDate.getMonth()}/${updateDate.getDate()}/${updateDate.getHours()}:${updateDate.getMinutes()}:${updateDate.getSeconds()}`
+        updateDate = `${updateDate.getFullYear()}.${updateDate.getMonth()}.${updateDate.getDate()}/${updateDate.getHours()}.${updateDate.getMinutes()}.${updateDate.getSeconds()}`
 
         // firebase
         if (this.imgURL !== this.post.postImg){
-          const storageRef = firebase.storage().ref(`posts/test${new Date().toLocaleString()}`)
-          firebase.storage().refFromURL(this.post.postImg).delete()
+          const storageRef = firebase.storage().ref(`posts/${this.userEmail}/${this.post.postCreateDate}`)
+          // firebase.storage().refFromURL(this.post.postImg).delete()
           storageRef.put(this.imgFile)
           .then(() => {
             storageRef.getDownloadURL()
@@ -169,7 +170,7 @@
                 categoryName : this.category,
                 hashtagContent : this.hashtag,
                 tagUserEmail : this.taguser,
-                userEmail : "test"
+                userEmail : this.userEmail
               })
               .then(() => {
                 router.push("/posts")
@@ -178,7 +179,6 @@
             })
           })
         } else {
-          // 동기 비동기 문제 해결할 것
           const baseURL = "http://localhost:8000";
           this.$http.post(`${baseURL}/api/v1/posts/update`, {
             postNo : this.post.postNo,

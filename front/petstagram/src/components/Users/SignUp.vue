@@ -115,8 +115,6 @@ export default {
         .then(url => {
           // 동기 비동기 문제 해결할 것
           this.imgURL = url
-          console.log("IMGURL: ",this.imgURL)
-          console.log("URL: ",this.url)
           this.$http.post('http://localhost:8000/api/v1/user/signup', {
             userEmail: this.userEmail,
             userNickname: this.userNickname,

@@ -49,8 +49,13 @@ public class PostsController {
 
     @GetMapping("/api/v1/posts/userEmail")
     public ResponseEntity<Map<String, Object>> getUsers(@RequestParam String userEmail){
-        Posts posts = postService.getPosts(userEmail);
+        List<Posts> posts = postService.getByuserEmail(userEmail);
         return handleSuccess(posts);
+    }
+
+    @PostMapping("/api/v1/posts/updatepostlike")
+    public ResponseEntity<Map<String, Object>> updatePostLike(@RequestBody Posts posts){
+        return handleSuccess(postService.updatePostLike(posts));
     }
 
     public ResponseEntity<Map<String, Object>> handleSuccess(Object data){

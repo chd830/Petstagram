@@ -16,7 +16,7 @@
         label="Age"
         v-model="userAge"
       ></v-text-field>
-      <v-img :src="userImg"></v-img>
+      <v-img :src="imageUrl"></v-img>
       <!-- <v-text-field
         hide-details="auto"
         label="Image"
@@ -86,14 +86,6 @@ created() {
     {
         withCredentials: true,
     }).then((res) => {
-      /*
-      {
-        jwttoken: "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFM1MTIifQ.eyJ1c2VyTml…w1scoJQfuLYQPly_vxCrFjpZiXc_rug6IA-aCUD6eOhy1fZqQ", 
-        username: "cd", 
-        userAge: 0, 
-        userImg: null
-        }
-      */
         console.log("DATA: ",res.data)
         this.userNickname = res.data.userNickname;
         this.userImg = res.data.userImg;
@@ -113,7 +105,6 @@ created() {
       .then(() => {
         storageRef.getDownloadURL()
         .then(url => {
-          console.log("URL: ",url);
           // 동기 비동기 문제 해결할 것
           this.imgURL = url
           this.$http.post('http://localhost:8000/api/v1/user/update', {
@@ -129,7 +120,7 @@ created() {
               withCredentials: true,
           }).then(() => {
             alert('개인정보 변경이 완료되었습니다.')
-            // router.push("/signin")
+            router.push("/signin")
           })
         })
       })

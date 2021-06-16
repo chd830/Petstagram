@@ -109,6 +109,7 @@
       rules: [
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
+      userEmail : "test",
       imgURL : null,
       imgFile : null,
       subject: null,
@@ -117,6 +118,8 @@
       category : "",
       hashtag : [],
       taguser : [],
+      latitude : null,
+      longitude : null
     }),
 
     watch: {
@@ -138,25 +141,22 @@
       resetForm () {
         router.push("/posts")
       },
-      submit () {        
+      getposition() {
         // get position
-        var latitude;
-        var longitude;
         navigator.geolocation.getCurrentPosition(pos => {
-        latitude = pos.coords.latitude;
-        longitude = pos.coords.longitude;
+          this.latitude = pos.coords.latitude;
+          this.longitude = pos.coords.longitude;
         }, err => {
           console.log(err.message)
         })
+      },
+      submit () {        
         // DateTime
         var createDate = new Date();
-        createDate = `${createDate.getFullYear()}/${createDate.getMonth()}/${createDate.getDate()}/${createDate.getHours()}:${createDate.getMinutes()}:${createDate.getSeconds()}`
-        const updateDate = createDate
-        const postLike = 0;
-        const commentNo = 0;
+        createDate = `${createDate.getFullYear()}.${createDate.getMonth()}.${createDate.getDate()}/${createDate.getHours()}.${createDate.getMinutes()}.${createDate.getSeconds()}`
 
         // firebase
-        const storageRef = firebase.storage().ref(`posts/test${new Date().toLocaleString()}`)
+        const storageRef = firebase.storage().ref(`posts/${this.userEmail}/${createDate}`)
         storageRef.put(this.imgFile)
         .then(() => {
           storageRef.getDownloadURL()
@@ -169,17 +169,17 @@
               postNo : -1,
               postSubject : this.subject,
               postContent : this.content,
-              postLike : postLike,
+              postLike : [],
               postImg : this.imgURL,
-              postLng : longitude,
-              postLat : latitude,
+              postLng : this.longitude,
+              postLat : this.latitude,
               postCreateDate : createDate,
-              postUpdateDate : updateDate,
-              commentNo : commentNo,
+              postUpdateDate : createDate,
+              commentNo : [],
               categoryName : this.category,
               hashtagContent : this.hashtag,
               tagUserEmail : this.taguser,
-              userEmail : "test"
+              userEmail : this.userEmail
             })
             .then(() => {
               router.push("/posts")
@@ -189,5 +189,8 @@
         })
       },
     },
+    mounted() {
+      this.getposition();
+    }
   }
 </script>
