@@ -35,6 +35,7 @@ public class UserService {
     }
 
     public Boolean checkSignIn(Users user) {
+        System.out.println(user);
         return this.getUsers(user).getUserPwd().equals(user.getUserPwd());
     }
 

@@ -14,6 +14,10 @@
       SignIn
     </v-btn>
     &nbsp;&nbsp;&nbsp;
+    <v-btn v-on:click="google" color="primary" large outlined>
+      Google
+    </v-btn>
+    &nbsp;&nbsp;&nbsp;
     <v-btn v-on:click="signup" color="error" large outlined>
       SignUp
     </v-btn>
@@ -36,10 +40,15 @@ export default {
     signup() {
       router.push('/signup')
     },
+    google() {
+      //  router.push('http://localhost:8080/oauth2/authorization/google')
+      window.location.href='http://localhost:8080/oauth2/authorization/google'
+    },
     signin() {
+      console.log('click')
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
-        userEmail: this.userEmail,
-        userPwd : this.userPwd,
+        email: this.userEmail,
+        password : this.userPwd,
       }, 
       { 
         headers: { 'Content-Type': 'application/json' } 
@@ -51,7 +60,8 @@ export default {
         if(res.data) {
           localStorage.setItem("userEmail", this.userEmail)
           alert('로그인이 완료되었습니다.')
-          router.push("/")
+          window.location.href='/'
+          // router.push("/")
         }
         else {
           alert('다시 로그인해 주세요.')
