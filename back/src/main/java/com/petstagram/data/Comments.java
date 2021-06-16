@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 
 @Document(collection = "Comments")
 // Getter생성
@@ -23,8 +24,11 @@ public class Comments {
     private String commentContent;
     private String commentCreateDate;
     private String commentUpdateDate;
-    private int commentLike;
+    private List<String> commentLike;
 
     // Users
     private String userEmail;
+
+//    Posts
+    private int postNo;
 }

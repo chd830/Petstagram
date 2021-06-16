@@ -28,6 +28,7 @@ public class PostService{
         }
         return null;
     }
+
     public Posts getBypostNo(int postNo){
         try{
             Criteria criteria = new Criteria("postNo");
@@ -62,6 +63,8 @@ public class PostService{
         }
         return false;
     }
+
+    // post 수정
     public boolean update(Posts posts){
         try{
             Criteria criteria = new Criteria("postNo");
@@ -77,8 +80,6 @@ public class PostService{
             update.set("categoryName", posts.getCategoryName());
             update.set("hashtagContent", posts.getHashtagContent());
             update.set("tagUserEmail", posts.getTagUserEmail());
-            update.set("postLike", posts.getPostLike());
-            update.set("commentNo", posts.getCommentNo());
 
             mongoTemplate.updateFirst(query, update, Posts.class);
             return true;
@@ -87,6 +88,49 @@ public class PostService{
         }
         return false;
     }
+
+    // comment 수정
+    public boolean updateComment(int postNo, int commentNo){
+        try{
+            Criteria criteria = new Criteria("postNo");
+            criteria.is(postNo);
+
+            Query query = new Query(criteria);
+            Update update = new Update();
+
+            Posts posts = getBypostNo(postNo);
+            List<Integer> comments = posts.getCommentNo();
+            comments.add(commentNo);
+
+            update.set("commentNo", comments);
+
+            mongoTemplate.updateFirst(query, update, Posts.class);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // postLike 수정
+    public boolean updatePostLike(Posts posts){
+        try{
+            Criteria criteria = new Criteria("postNo");
+            criteria.is(posts.getPostNo());
+
+            Query query = new Query(criteria);
+            Update update = new Update();
+
+            update.set("postLike", posts.getPostLike());
+
+            mongoTemplate.updateFirst(query, update, Posts.class);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean deleteBypostNo(int postNo){
         try{
             Criteria criteria = new Criteria("postNo");
@@ -98,16 +142,5 @@ public class PostService{
             e.printStackTrace();
         }
         return false;
-    }
-
-    // SELECT
-    public Posts getPosts(String userEmail) {
-        Criteria criteria = new Criteria("userEmail");
-        criteria.is(userEmail);
-
-        Query query = new Query(criteria);
-
-        Posts post = mongoTemplate.findOne(query, Posts.class, "Posts");
-        return Optional.ofNullable(post).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not found"));
     }
 }

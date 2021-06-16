@@ -2,6 +2,7 @@ package com.petstagram.controller;
 
 import com.petstagram.data.Comments;
 import com.petstagram.service.CommentsService;
+import com.petstagram.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ public class CommentsController {
 
     @Autowired
     private CommentsService commentService;
+
+    @Autowired
+    private PostService postService;
 
     @ExceptionHandler
     public ResponseEntity<Map<String, Object>> handler(Exception e) {
@@ -40,16 +44,31 @@ public class CommentsController {
         return handleSuccess(comments);
     }
 
+    @GetMapping("/api/v1/comments/postNo")
+    public ResponseEntity<Map<String, Object>> getByPosts(@RequestParam int postNo) {
+        List<Comments> comments = commentService.getByPostNo(postNo);
+        return handleSuccess(comments);
+    }
+
     @PostMapping("/api/v1/comments/insert")
     public ResponseEntity<Map<String, Object>> insertComment(@RequestBody Comments comments) {
         int commentNo = commentService.getAll().size() + 1;
         comments.setCommentNo(commentNo);
-        return handleSuccess(commentService.insert(comments));
+        boolean res = commentService.insert(comments);
+        if (res) {
+            return handleSuccess(postService.updateComment(comments.getPostNo(), commentNo));
+        }
+        return handleSuccess("fail");
     }
 
     @PostMapping("/api/v1/comments/update")
     public ResponseEntity<Map<String, Object>> updateComment(@RequestBody Comments comments) {
         return handleSuccess(commentService.update(comments));
+    }
+
+    @PostMapping("/api/v1/comments/updatelike")
+    public ResponseEntity<Map<String, Object>> updateCommentLike(@RequestBody Comments comments) {
+        return handleSuccess(commentService.updateCommentLike(comments));
     }
 
     public ResponseEntity<Map<String, Object>> handleSuccess(Object data) {
