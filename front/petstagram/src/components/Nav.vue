@@ -11,8 +11,8 @@
         <b-nav-item href="/posts" v-if="login">Post</b-nav-item>
         <b-nav-item href="/posts/insert" v-if="login">PostInsert</b-nav-item>
         <b-nav-item href="/mypage" v-if="login">MyPage</b-nav-item>
-        <b-nav-item href="/signup">Signup</b-nav-item>
-        <b-nav-item href="/signin">SignIn</b-nav-item>
+        <b-nav-item href="/signup" v-if="!login">Signup</b-nav-item>
+        <b-nav-item href="/signin" v-if="!login">SignIn</b-nav-item>
         <b-nav-item href="/Logout" v-if="login">Logout</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
