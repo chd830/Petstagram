@@ -1,4 +1,4 @@
-package com.petstagram.social;
+package com.petstagram.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,12 +36,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 @RestController
-@RequestMapping("/api/v1")
 public class GoogleController {
 	
 	static private final String client_id = "547900846133-ioo7t5i7eeal0b62uqshq2bje70g2hhi.apps.googleusercontent.com";
 	static private final String client_secret = "1BIsFcGsIEr7VnXjqnJT7nro";
-	static private final String redirect_uri = "http://localhost:8080/auth/google/callback";
+	static private final String redirect_uri = "http://localhost:8000/api/v1/auth/google/callback";
 	
 	@Autowired
 	private UserService userService;
@@ -53,7 +52,7 @@ public class GoogleController {
 	private JwtUserDetailsService userDetailsService;
 	
 	@CrossOrigin
-	@RequestMapping(value = "/googlelogin", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/api/v1/googlelogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public Object google(Model model, HttpSession session) {
 		String url = "https://accounts.google.com/o/oauth2/auth?client_id="+
 			    	client_id +
@@ -65,8 +64,9 @@ public class GoogleController {
 		return new ResponseEntity<>(url, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/google/googlecallback", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/api/v1/auth/google/callback", method = {RequestMethod.GET, RequestMethod.POST})
 	public void googlecallback(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
+		System.out.println("CALL BACK");
 		String code = request.getParameter("code");
 		String query = "code=" + code;
 		query += "&client_id=" + client_id;
@@ -75,17 +75,17 @@ public class GoogleController {
 		query += "&grant_type=authorization_code";
 
 		String tokenJson = getHttpConnection("https://accounts.google.com/o/oauth2/token", query);
-		System.out.println(tokenJson.toString());
+		System.out.println("TOKEN JSON: "+tokenJson.toString());
 		Gson gson = new Gson();
 		Token token = gson.fromJson(tokenJson, Token.class);
 
 		String ret = getHttpConnection("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());
-		System.out.println(ret);
+		System.out.println("RET: "+ret);
 		
 		JSONParser parser = new JSONParser();
 		Object obj = parser.parse(ret);
 		JSONObject jsonobj = (JSONObject) obj;
-		
+		System.out.println("JOSNOBJ: "+jsonobj);
 		String id = (String) jsonobj.get("id");
 		String email = (String) jsonobj.get("email");
 		String name = (String) jsonobj.get("name");
@@ -98,7 +98,7 @@ public class GoogleController {
 		Users getUser = new Users();
 		getUser.setUserEmail(email);
 		Users user = userService.getUsers(getUser);
-		System.out.println(user);
+		System.out.println("USER: "+user);
 		
 		if(user != null) {
 			final UserDetails userDetails = userDetailsService
