@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.petstagram.configuration.JwtTokenUtil;
+import com.petstagram.data.Role;
 import com.petstagram.data.Users;
 import com.petstagram.service.JwtUserDetailsService;
 import com.petstagram.service.UserService;
@@ -75,9 +76,9 @@ public class GoogleController {
 		query += "&grant_type=authorization_code";
 
 		String tokenJson = getHttpConnection("https://accounts.google.com/o/oauth2/token", query);
-		System.out.println("TOKEN JSON: "+tokenJson.toString());
 		Gson gson = new Gson();
 		Token token = gson.fromJson(tokenJson, Token.class);
+		System.out.println("TOKEN JSON: "+token);
 
 		String ret = getHttpConnection("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());
 		System.out.println("RET: "+ret);
@@ -116,6 +117,7 @@ public class GoogleController {
 			String pass = Integer.toString(random.nextInt(900000) + 100000);
 			System.out.println("패스워드:"+pass);
 			user.setUserNickname(email.split("@")[0]);
+			user.setRole(Role.USER);
 			user.setUserPwd(bcryptEncoder.encode(pass));
 			userService.insert(user);
 			// 토큰 생성
