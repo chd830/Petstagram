@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.net.CacheRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +66,14 @@ public class CommentsService {
 
     public boolean insert(Comments comments){
         try{
+            List<Comments> comment = getAll();
+            int no;
+            if (comment.size() > 0){
+                no = comment.get(comment.size()-1).getCommentNo();
+            } else {
+                no = 0;
+            }
+            comments.setCommentNo(no+1);
             mongoTemplate.insert(comments);
             return true;
         }catch(Exception e){

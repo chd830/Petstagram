@@ -44,17 +44,8 @@
             style="width:250px;height:300px;object-fit:cover">
           </v-img>
           
-          <!-- subject -->
-          <v-card-text>
-            <v-text-field
-              ref="subject"
-              v-model="subject"
-              :rules="[() => !!subject || 'This field is required']"
-              label="Subject"
-              placeholder="Pet"
-              required
-            ></v-text-field>
-            
+          <v-card-text>            
+
             <!-- content -->
             <v-textarea
               v-model="content"
@@ -112,7 +103,6 @@
       userEmail : "test",
       imgURL : null,
       imgFile : null,
-      subject: null,
       content : null,
       pets : ["강아지", "고양이", "햄스터", "물고기", "도마뱀"],
       category : "",
@@ -167,7 +157,6 @@
             const baseURL = "http://localhost:8000";
             this.$http.post(`${baseURL}/api/v1/posts/insert`, {
               postNo : -1,
-              postSubject : this.subject,
               postContent : this.content,
               postLike : [],
               postImg : this.imgURL,
@@ -175,7 +164,6 @@
               postLat : this.latitude,
               postCreateDate : createDate,
               postUpdateDate : createDate,
-              commentNo : [],
               categoryName : this.category,
               hashtagContent : this.hashtag,
               tagUserEmail : this.taguser,

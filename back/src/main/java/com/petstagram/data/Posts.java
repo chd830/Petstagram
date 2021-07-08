@@ -21,7 +21,6 @@ import java.util.List;
 public class Posts {
     @Id
     private int postNo;
-    private String postSubject;
     private String postContent;
     private List<String> postLike;
     private String postImg;
@@ -29,10 +28,6 @@ public class Posts {
     private double postLat;
     private String postCreateDate;
     private String postUpdateDate;
-
-    // Comments
-//    delete?
-    private List<Integer> commentNo;
 
     // Categories
     private String categoryName;

@@ -18,10 +18,6 @@
               style="object-fit:cover"
               @click="goDetail(post.postNo)"
             >
-              <span
-                class="headline white--text pl-4 pt-4"
-                v-text="post.postSubject"
-              ></span>
             </v-img>
           </v-card>
         </v-col>

@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@CrossOrigin(origins = {"*"}, maxAge=6000)
 @RestController
 public class PostsController {
 
@@ -37,8 +36,6 @@ public class PostsController {
 
     @PostMapping("/api/v1/posts/insert")
     public ResponseEntity<Map<String, Object>> insertPosts(@RequestBody Posts posts){
-        int postNo = postService.getAll().size()+1;
-        posts.setPostNo(postNo);
         return handleSuccess(postService.insert(posts));
     }
 

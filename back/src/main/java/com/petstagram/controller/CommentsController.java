@@ -52,13 +52,7 @@ public class CommentsController {
 
     @PostMapping("/api/v1/comments/insert")
     public ResponseEntity<Map<String, Object>> insertComment(@RequestBody Comments comments) {
-        int commentNo = commentService.getAll().size() + 1;
-        comments.setCommentNo(commentNo);
-        boolean res = commentService.insert(comments);
-        if (res) {
-            return handleSuccess(postService.updateComment(comments.getPostNo(), commentNo));
-        }
-        return handleSuccess("fail");
+        return handleSuccess(commentService.insert(comments));
     }
 
     @PostMapping("/api/v1/comments/update")
