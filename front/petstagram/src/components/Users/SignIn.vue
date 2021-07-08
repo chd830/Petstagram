@@ -42,7 +42,12 @@ export default {
     },
     google() {
       //  router.push('http://localhost:8080/oauth2/authorization/google')
-      window.location.href='http://localhost:8080/oauth2/authorization/google'
+      // window.location.href='http://localhost:8000/api/v1/googlelogin'
+      this.$http.post('http://localhost:8000/api/v1/googlelogin')
+      .then(res => {
+        console.log(res)
+        window.location.href=res.data
+      })
     },
     signin() {
       console.log('click')
