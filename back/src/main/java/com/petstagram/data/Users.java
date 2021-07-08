@@ -3,8 +3,7 @@ package com.petstagram.data;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -31,4 +30,17 @@ public class Users {
 
     // Friends
     private List<String> friendUserEmail;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    public Users update(String userNickname, String userImg) {
+        this.userNickname = userNickname;
+        this.userImg = userImg;
+        return this;
+    }
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }

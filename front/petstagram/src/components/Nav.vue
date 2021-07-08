@@ -8,14 +8,36 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="/posts">Post</b-nav-item>
-        <b-nav-item href="/posts/insert">PostInsert</b-nav-item>
-        <b-nav-item href="/mypage">MyPage</b-nav-item>
+        <b-nav-item href="/posts" v-if="login">Post</b-nav-item>
+        <b-nav-item href="/posts/insert" v-if="login">PostInsert</b-nav-item>
+        <b-nav-item href="/mypage" v-if="login">MyPage</b-nav-item>
         <b-nav-item href="/signup">Signup</b-nav-item>
         <b-nav-item href="/signin">SignIn</b-nav-item>
-        <b-nav-item href="/Logout">Logout</b-nav-item>
+        <b-nav-item href="/Logout" v-if="login">Logout</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </div>
 </template>
+<script>
+export default {
+  name: "app",  
+  data() {
+    return {
+      login: false,
+      userEmail: localStorage.getItem("userEmail"),
+    }
+  },
+  created() {
+      console.log("==========")
+      console.log(this.userEmail)
+      if(this.userEmail == null)
+        this.login = false;
+      else
+        this.login = true;
+      console.log(this.login)
+      console.log("==========")
+  }
+}
+</script>
+

@@ -8,25 +8,25 @@
       v-model="userEmail"
     ></v-text-field>
     <v-text-field 
-    label="NickName"
-    v-model="userNickname"
-    :rules="[() => !!userNickname || 'This field is required']"
+      label="NickName"
+      v-model="userNickname"
+      :rules="[() => !!userNickname || 'This field is required']"
     ></v-text-field>
     <v-text-field 
-    label="Password"
-    v-model="userPwd"
-    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-    :rules="[rules.required, rules.min]"
-    :type="show1 ? 'text' : 'password'"
-    @click:append="show1 = !show1"
+      label="Password"
+      v-model="userPwd"
+      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+      :rules="[rules.required, rules.min]"
+      :type="show1 ? 'text' : 'password'"
+      @click:append="show1 = !show1"
     ></v-text-field>
     <v-text-field 
-    label="Password check"
-    v-model="userPwd2"
-    :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-    :rules="[rules.required, rules.min]"
-    :type="show2 ? 'text' : 'password'"
-    @click:append="show2 = !show2"
+      label="Password check"
+      v-model="userPwd2"
+      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+      :rules="[rules.required, rules.min]"
+      :type="show2 ? 'text' : 'password'"
+      @click:append="show2 = !show2"
     ></v-text-field>
     <v-text-field 
       label="Age"
@@ -36,11 +36,16 @@
       prepend-icon="remove" 
       @click:prepend="decrement">
       </v-text-field>
-    <input ref="imageInput" type="file" hidden @change="onChangeImages">
-    <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
-    <v-img
-      v-if="imageUrl" :src="imageUrl"
-    ></v-img>
+    <!-- <input ref="imageInput" type="file" hidden @change="onChangeImages"> -->
+    <v-img :src="imageUrl"></v-img>
+    <v-file-input
+      @change="changeImg"
+      :rules="[rules.max]"
+      accept="image/png, image/jpeg, image/bmp"
+      placeholder="Select picture"
+      prepend-icon="mdi-camera"
+      style="width:99%"
+    ></v-file-input>
     <br/><br/><br/>
     <v-btn v-on:click="signup" color="primary" large outlined>
       SignUp
@@ -72,22 +77,20 @@ export default {
       show2: false,
       password: 'Password',
       rules: {
+        max: value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
         required: value => !!value || 'Required.',
         min: v => v.length >= 4 || 'Min 4 characters',
         emailMatch: () => (`The email and password you entered don't match`),
+        
       }
     }
   },
   methods: {
-    onClickImageUpload() {
-      this.$refs.imageInput.click();
-    },
-    onChangeImages(e) {
-        console.log(e.target.files)
-        const file = e.target.files[0]; // Get first index in files
-        console.log(file)
-        this.imageUrl = URL.createObjectURL(file); // Create File URL
-        console.log(this.imageUrl)
+    changeImg(file) {
+      if (file) {
+        this.imgURL = URL.createObjectURL(file)
+        this.userImg = file
+      } else {this.imgURL=null}
     },
     increment() {
       this.userAge += 1
@@ -99,12 +102,14 @@ export default {
       router.push('/signin')
     },
     signup() {
+      console.log('click')
       if(this.userPwd != this.userPwd2) {
         alert('입력한 두 비밀번호가 일치하지 않습니다.')
         return
       }
-      const storageRef = firebase.storage().ref(this.userEmail)
-      storageRef.put(this.imgFile)
+      console.log("USERIMG: ",this.userImg);
+      const storageRef = firebase.storage().ref(`users/${this.userEmail}`)
+      storageRef.put(this.userImg)
       .then(() => {
         storageRef.getDownloadURL()
         .then(url => {
@@ -113,7 +118,8 @@ export default {
           this.$http.post('http://localhost:8000/api/v1/user/signup', {
             userEmail: this.userEmail,
             userNickname: this.userNickname,
-            userImg: this.url,
+            userAge: this.userAge,
+            userImg: this.imgURL,
             userPwd : this.userPwd,
           }, 
           { 
