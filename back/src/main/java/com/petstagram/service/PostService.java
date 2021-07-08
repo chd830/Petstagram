@@ -37,6 +37,7 @@ public class PostService{
             Query query = new Query(criteria);
 
             Posts post = mongoTemplate.findOne(query, Posts.class, "Posts");
+
             return Optional.ofNullable(post).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not found"));
         }catch(Exception e){
             e.printStackTrace();
@@ -56,6 +57,16 @@ public class PostService{
 
     public boolean insert(Posts posts){
         try{
+            // auto_increment
+            List<Posts> post = getAll();
+            int no;
+            if (post.size() > 0){
+                no = post.get(post.size()-1).getPostNo();
+            } else {
+                no = 0;
+            }
+            posts.setPostNo(no+1);
+
             mongoTemplate.insert(posts);
             return true;
         }catch (Exception e){
@@ -73,36 +84,12 @@ public class PostService{
             Query query = new Query(criteria);
             Update update = new Update();
 
-            update.set("postSubject", posts.getPostSubject());
             update.set("postContent", posts.getPostContent());
             update.set("postImg", posts.getPostImg());
             update.set("postUpdateDate", posts.getPostUpdateDate());
             update.set("categoryName", posts.getCategoryName());
             update.set("hashtagContent", posts.getHashtagContent());
             update.set("tagUserEmail", posts.getTagUserEmail());
-
-            mongoTemplate.updateFirst(query, update, Posts.class);
-            return true;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // comment 수정
-    public boolean updateComment(int postNo, int commentNo){
-        try{
-            Criteria criteria = new Criteria("postNo");
-            criteria.is(postNo);
-
-            Query query = new Query(criteria);
-            Update update = new Update();
-
-            Posts posts = getBypostNo(postNo);
-            List<Integer> comments = posts.getCommentNo();
-            comments.add(commentNo);
-
-            update.set("commentNo", comments);
 
             mongoTemplate.updateFirst(query, update, Posts.class);
             return true;

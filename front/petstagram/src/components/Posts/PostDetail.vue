@@ -8,10 +8,6 @@
         :alt="post.postSubject"
         style="margin:auto"
       >
-        <span
-          class="headline white--text pl-4 pt-4"
-          v-text="post.postSubject"
-        ></span>
       </v-img>
       <v-icon v-if="post.postLike && post.postLike.includes(userEmail)" @click="checkPostLike">favorite</v-icon>
       <v-icon v-else @click="checkPostLike">favorite_border</v-icon>

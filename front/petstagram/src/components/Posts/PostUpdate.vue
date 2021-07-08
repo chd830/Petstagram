@@ -43,17 +43,9 @@
             v-if="imgURL" :src="imgURL"
             style="width:250px;height:300px;object-fit:cover">
           </v-img>
-          <!-- subject -->
+
           <v-card-text>
-            <v-text-field
-              ref="subject"
-              v-model="subject"
-              :rules="[() => !!subject || 'This field is required']"
-              label="Subject"
-              placeholder="Pet"
-              required
-            ></v-text-field>
-            
+
             <!-- content -->
             <v-textarea
               v-model="content"
@@ -112,7 +104,6 @@
       userEmail : "test",
       imgURL : null,
       imgFile : null,
-      subject: null,
       content : null,
       pets : ["강아지", "고양이", "햄스터", "물고기", "도마뱀"],
       category : "",
@@ -158,7 +149,6 @@
               const baseURL = "http://localhost:8000";
               this.$http.post(`${baseURL}/api/v1/posts/update`, {
                 postNo : this.post.postNo,
-                postSubject : this.subject,
                 postContent : this.content,
                 postLike : this.post.postLike,
                 postImg : this.imgURL,
@@ -166,7 +156,6 @@
                 postLat : this.post.postLat,
                 postCreateDate : this.post.postCreateDate,
                 postUpdateDate : updateDate,
-                commentNo : this.post.commentNo,
                 categoryName : this.category,
                 hashtagContent : this.hashtag,
                 tagUserEmail : this.taguser,
@@ -182,7 +171,6 @@
           const baseURL = "http://localhost:8000";
           this.$http.post(`${baseURL}/api/v1/posts/update`, {
             postNo : this.post.postNo,
-            postSubject : this.subject,
             postContent : this.content,
             postLike : this.post.postLike,
             postImg : this.imgURL,
@@ -190,7 +178,6 @@
             postLat : this.post.postLat,
             postCreateDate : this.post.postCreateDate,
             postUpdateDate : updateDate,
-            commentNo : this.post.commentNo,
             categoryName : this.category,
             hashtagContent : this.hashtag,
             tagUserEmail : this.taguser,
@@ -209,7 +196,6 @@
         .then((response) => {
           this.post = response.data.data;
           this.imgURL = this.post.postImg
-          this.subject = this.post.postSubject
           this.content = this.post.postContent
           this.category = this.post.categoryName
           this.hashtag = this.post.hashtagContent
