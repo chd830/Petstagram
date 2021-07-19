@@ -39,21 +39,6 @@ public class JwtAuthenticationController {
 		System.out.println(user);
 		System.out.println(userService.getUsers(user));
 		return new ResponseEntity<Users>(userService.getUsers(user), HttpStatus.OK);
-//		Users user = new Users();
-//		user.setUserEmail(authenticationRequest.getEmail());
-//		Users getUser = userService.getUsers(user);
-//		// password의 값이 없을 때에는 접근이 불가능
-//		authenticationRequest.setPassword(getUser.getUserPwd());
-//		System.out.println("REQUEST: "+authenticationRequest);
-//		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-//		final UserDetails userDetails = userDetailsService
-//				.loadUserByUsername(authenticationRequest.getEmail());
-//		System.out.println("USERDEAILT: "+userDetails);
-//		final String loginToken = jwtTokenUtil.generateToken(userDetails);
-//
-//		System.out.println("이메일:"+jwtTokenUtil.getEmailByToken(loginToken));
-//		System.out.println("닉네임:"+jwtTokenUtil.getNicknameByToken(loginToken));
-//		return ResponseEntity.ok(new JwtResponse(loginToken, jwtTokenUtil.getNicknameByToken(loginToken), getUser.getUserAge(), getUser.getUserImg()));
 	}
 
 	@RequestMapping(value = "/api/v1/user/signin", method = RequestMethod.POST)

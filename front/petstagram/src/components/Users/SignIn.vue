@@ -50,7 +50,8 @@ export default {
       })
     },
     signin() {
-      console.log('click')
+      console.log(this.userEmail, this.userPwd)
+
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
         email: this.userEmail,
         password : this.userPwd,

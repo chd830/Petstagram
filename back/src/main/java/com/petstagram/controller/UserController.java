@@ -10,41 +10,47 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class UserController {
 
     private static UserService userService = new UserService();
 
+    @ExceptionHandler
+    public ResponseEntity<Map<String, Object>> handler(Exception e){
+        return handleFail(e.getMessage(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> handleSuccess(Object data){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("state", "ok");
+        resultMap.put("data", data);
+        return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> handleFail(Object data, HttpStatus status){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("state", "fail");
+        resultMap.put("data", data);
+        return new ResponseEntity<Map<String,Object>>(resultMap, status);
+    }
+
     @GetMapping("/api/v1/test")
-    public ResponseEntity<String> test(@RequestParam String str) {
-        return new ResponseEntity<>(str, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> test(@RequestParam String str) {
+        return handleSuccess(str);
     }
 
     @PostMapping("/api/v1/user")
-    public void getUser(@RequestBody Users user) {
-        System.out.println(user);
+    public ResponseEntity<Map<String, Object>> getUser(@RequestBody Users user) {
+        System.out.println(userService.getUsers(user));
+        return handleSuccess(userService.getUsers(user));
     }
       
-//    @PostMapping( "/api/v1/user/signup")
-//    public ResponseEntity<Boolean> signup(@RequestBody Users user) {
-//        System.out.println(user);
-//        if(userService.getUsers(user) != null)
-//            return new ResponseEntity<>(false, HttpStatus.OK);
-//        userService.insert(user);
-//        return new ResponseEntity<>(true, HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/api/v1/user/signin")
-//    public ResponseEntity<Boolean> signin(@RequestBody Users user) {
-//        System.out.println("INPUT "+user);
-//        return new ResponseEntity<>(userService.checkSignIn(user), HttpStatus.OK);
-//    }
-
     @PostMapping("/api/v1/user/update")
-    public ResponseEntity<Boolean> updateUser(@RequestBody Users user) {
-        return new ResponseEntity<>(userService.updateUsers(user), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> updateUser(@RequestBody Users user) {
+        return handleSuccess(userService.updateUsers(user));
     }
 
 }
