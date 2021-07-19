@@ -1,5 +1,6 @@
 package com.petstagram.service;
 
+import com.mongodb.*;
 import com.petstagram.data.Users;
 import com.petstagram.test.RestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +47,18 @@ public class UserService {
     // UPDATE
     public boolean updateUsers(Users user) {
         try {
-            Criteria criteria = new Criteria("userNickname");
-            criteria.is(user.getUserNickname());
+            Users prev = getUsers(user);
 
+            // 기준이 되는 정보
+            Criteria criteria = new Criteria("userEmail");
+            criteria.is(prev.getUserEmail());
+
+            // 수정할 정보
             Query query = new Query(criteria);
             Update update = new Update();
             update.set("userNickname", user.getUserNickname());
-// 하나만/
+
+            // 하나만 실행
             mongoTemplate.updateFirst(query, update, Users.class);
         } catch(Exception e) {
             return false;
