@@ -1,15 +1,13 @@
 package com.petstagram.controller;
 
 import com.petstagram.data.Users;
-//import com.petstagram.security.oauth2.user.SessionUser;
 import com.petstagram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,4 +51,9 @@ public class UserController {
         return handleSuccess(userService.updateUsers(user));
     }
 
+    @PostMapping("/api/v1/sendmail")
+    public ResponseEntity<Map<String, Object>> sendMail(@RequestBody Users user) {
+        System.out.println(user);
+        return handleSuccess(userService.sendMail(user));
+    }
 }
