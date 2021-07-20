@@ -1,4 +1,4 @@
-package com.petstagram.controller;
+package com.petstagram.social;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import com.petstagram.configuration.JwtTokenUtil;
 import com.petstagram.data.Role;
+import com.petstagram.data.Token;
 import com.petstagram.data.Users;
 import com.petstagram.service.JwtUserDetailsService;
 import com.petstagram.service.UserService;

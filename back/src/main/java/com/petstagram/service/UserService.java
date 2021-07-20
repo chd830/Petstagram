@@ -3,6 +3,7 @@ package com.petstagram.service;
 import com.mongodb.*;
 import com.petstagram.data.Users;
 import com.petstagram.test.RestException;
+import com.petstagram.test.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
@@ -46,6 +47,7 @@ public class UserService {
 
     // UPDATE
     public boolean updateUsers(Users user) {
+        System.out.println(user);
         try {
             Users prev = getUsers(user);
 
@@ -57,9 +59,12 @@ public class UserService {
             Query query = new Query(criteria);
             Update update = new Update();
             update.set("userNickname", user.getUserNickname());
+            update.set("userImg", user.getUserImg());
 
             // 하나만 실행
-            mongoTemplate.updateFirst(query, update, Users.class);
+//            mongoTemplate.updateFirst(query, update, Users.class);
+//            수정할 게 여러개일 때
+            mongoTemplate.updateMulti(query, update, Users.class);
         } catch(Exception e) {
             return false;
         }

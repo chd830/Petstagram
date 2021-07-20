@@ -5,6 +5,7 @@
 <script>
 // import api from '@/api/index.js'
 // import EventBus from '../eventBus.js'
+import router from '../router/index.js'
 
 export default {
     created() {
@@ -14,8 +15,9 @@ export default {
         var parameters = afterDomain.split('&')
         var useremail = parameters[1].split('=')[1].split('%40')[0]+"@"+parameters[1].split('=')[1].split('%40')[1];
 
+        console.log('success')
         localStorage.setItem("userEmail", useremail)
-
+        router.push("/")
         // console.log("user")
         // api.post(`/user`, {
         //     useremail: useremail

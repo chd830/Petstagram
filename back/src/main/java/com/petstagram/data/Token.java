@@ -1,4 +1,4 @@
-package com.petstagram.controller;
+package com.petstagram.data;
 
 public class Token {
 	private String access_token;

@@ -1,26 +1,26 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" sm="10" md="8" lg="6">
-    <v-text-field
-      hide-details="auto"
-      label="Email"
-      v-model="userEmail"
-    ></v-text-field>
-    <v-text-field 
-    label="Password"
-    v-model="userPwd"
-    ></v-text-field>
-    <v-btn v-on:click="signin" color="primary" large outlined>
-      SignIn
-    </v-btn>
-    &nbsp;&nbsp;&nbsp;
-    <v-btn v-on:click="google" color="primary" large outlined>
-      Google
-    </v-btn>
-    &nbsp;&nbsp;&nbsp;
-    <v-btn v-on:click="signup" color="error" large outlined>
-      SignUp
-    </v-btn>
+      <v-text-field
+        hide-details="auto"
+        label="Email"
+        v-model="userEmail"
+      ></v-text-field>
+      <v-text-field 
+      label="Password"
+      v-model="userPwd"
+      ></v-text-field>
+      <v-btn v-on:click="signin" color="primary" large outlined>
+        SignIn
+      </v-btn>
+      &nbsp;&nbsp;&nbsp;
+      <v-btn v-on:click="google" color="primary" large outlined>
+        Google
+      </v-btn>
+      &nbsp;&nbsp;&nbsp;
+      <v-btn v-on:click="signup" color="error" large outlined>
+        SignUp
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -41,6 +41,7 @@ export default {
       router.push('/signup')
     },
     google() {
+      this.isLoading = true
       //  router.push('http://localhost:8080/oauth2/authorization/google')
       // window.location.href='http://localhost:8000/api/v1/googlelogin'
       this.$http.post('http://localhost:8000/api/v1/googlelogin')
@@ -50,6 +51,7 @@ export default {
       })
     },
     signin() {
+      this.isLoading = true
       console.log(this.userEmail, this.userPwd)
 
       this.$http.post('http://localhost:8000/api/v1/user/signin', {
@@ -67,12 +69,15 @@ export default {
           localStorage.setItem("userEmail", this.userEmail)
           alert('로그인이 완료되었습니다.')
           window.location.href='/'
-          // router.push("/")
+          router.push("/")
         }
         else {
           alert('다시 로그인해 주세요.')
         }
+      }).catch(() => {
+        alert('이메일이나 비밀번호가 잘못되었습니다.')
       })
+
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.petstagram.service;
+package com.petstagram.test;
 
 import com.petstagram.test.RestException;
 import com.petstagram.test.Test;

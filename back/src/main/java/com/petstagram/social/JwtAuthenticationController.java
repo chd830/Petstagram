@@ -1,4 +1,4 @@
-package com.petstagram.controller;
+package com.petstagram.social;
 
 import com.petstagram.configuration.JwtTokenUtil;
 import com.petstagram.data.JwtRequest;
@@ -36,8 +36,6 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value="/api/v1/user/getuser", method = RequestMethod.POST)
 	public ResponseEntity<?> getUser(@RequestBody Users user) throws Exception {
-		System.out.println(user);
-		System.out.println(userService.getUsers(user));
 		return new ResponseEntity<Users>(userService.getUsers(user), HttpStatus.OK);
 	}
 
