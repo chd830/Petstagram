@@ -17,11 +17,6 @@
         v-model="userAge"
       ></v-text-field>
       <v-img :src="imageUrl"></v-img>
-      <!-- <v-text-field
-        hide-details="auto"
-        label="Image"
-        v-model="userImg"
-      ></v-text-field> -->
       <v-file-input
         @change="changeImg"
         :rules="rules"
@@ -30,9 +25,17 @@
         prepend-icon="mdi-camera"
         style="width:99%"
       ></v-file-input>
-      <!-- <input ref="imageInput" type="file" hidden @change="onChangeImages">
-      <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn> -->
       <br/>
+      <div class="spinner-div" v-if="isLoading">
+        <b-spinner></b-spinner>
+      </div>
+      <div class="spinner-div" v-if="!isLoading">
+        <img
+          hide-details="auto"
+          label="Image"
+          :src="userImg"
+        />
+      </div>
       <v-btn v-on:click="update" color="primary" large outlined>
         Update
       </v-btn>
@@ -59,22 +62,12 @@ export default {
       userNickname: '',
       userAge: '',
       userImg: '',
-      imageUrl: null
+      imageUrl: null,
+      isLoading: false
     }
   },
 mounted() {
-  this.$nextTick(function() {
-    var data = firebase.storage().ref().child(`users/${this.userEmail}`)
-    data.getDownloadURL()
-    .then(function(url) {
-      //this.userImg를 못읽어서 이미지를 띄울 수 없음 값은 가져와짐!
-      this.userImg = url
-      console.log("MOUNTED: ",url)
-    })
-    .catch(function(err) {
-      console.log("ERR", err)
-    })
-  })
+
 },
 created() {
   this.$http.post('http://localhost:8000/api/v1/user/getuser', {
@@ -91,6 +84,19 @@ created() {
         this.userImg = res.data.userImg;
         this.userAge = res.data.userAge;
     })
+    // console.log('userEmail userImg')
+    // console.log(this.userEmail, this.userImg)
+    // var data = firebase.storage().ref().child(`users/${this.userEmail}`)
+    // console.log("download data")
+    // data.getDownloadURL()
+    // .then(function(url) {
+    //   console.log('===========================================\n',url,'================================================')
+    //   this.userEmail = url
+    //   // this.userImg = url
+    // })
+    // .catch(function(err) {
+    //   console.log("ERR", err)
+    // })
   },
   methods: {
     changeImg(file) {
@@ -100,6 +106,7 @@ created() {
       } else {this.imgURL=null}
     },
     update() {
+      this.isLoading = true
       const storageRef = firebase.storage().ref(`users/${this.userEmail}`)
       storageRef.put(this.userImg)
       .then(() => {
@@ -107,10 +114,11 @@ created() {
         .then(url => {
           // 동기 비동기 문제 해결할 것
           this.imgURL = url
+          console.log(url)
           this.$http.post('http://localhost:8000/api/v1/user/update', {
             userEmail: this.userEmail,
             userNickname: this.userNickname,
-            userImg: this.url,
+            userImg: url,
             userPwd : this.userPwd,
           }, 
           { 
@@ -118,12 +126,14 @@ created() {
           },
           {
               withCredentials: true,
-          }).then(() => {
+          }).then((res) => {
+            console.log(res.data)
             alert('개인정보 변경이 완료되었습니다.')
-            router.push("/signin")
+            // router.push("/signin")
           })
         })
       })
+      this.isLoading = false;
     },
     cancel() {
       router.push('/')

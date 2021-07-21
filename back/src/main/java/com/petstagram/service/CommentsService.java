@@ -23,7 +23,7 @@ public class CommentsService {
         try{
             List<Comments> comments = mongoTemplate.findAll(Comments.class);
             return Optional.ofNullable(comments).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not found"));
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return null;
@@ -38,7 +38,7 @@ public class CommentsService {
 
             Comments comments = mongoTemplate.findOne(query, Comments.class, "Comments");
             return Optional.ofNullable(comments).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "not found"));
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return null;
@@ -48,7 +48,7 @@ public class CommentsService {
         try{
             List<Comments> comments = mongoTemplate.find(new Query().addCriteria(Criteria.where("userEmail").is(userEmail)), Comments.class);
             return comments;
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return null;
@@ -58,7 +58,7 @@ public class CommentsService {
         try{
             List<Comments> comments = mongoTemplate.find(new Query().addCriteria(Criteria.where("postNo").is(postNo)), Comments.class);
             return comments;
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return null;
@@ -76,7 +76,7 @@ public class CommentsService {
             comments.setCommentNo(no+1);
             mongoTemplate.insert(comments);
             return true;
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return false;
@@ -94,7 +94,7 @@ public class CommentsService {
 
             mongoTemplate.updateFirst(query, update, Comments.class);
             return true;
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return false;
@@ -111,7 +111,7 @@ public class CommentsService {
 
             mongoTemplate.updateFirst(query, update, Comments.class);
             return true;
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
         return false;

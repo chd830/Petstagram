@@ -5,34 +5,26 @@
 <script>
 // import api from '@/api/index.js'
 // import EventBus from '../eventBus.js'
+import router from '../router/index.js'
+
 export default {
     created() {
         const url = window.location.href
         var afterDomain = url.slice(url.indexOf('?') + 1)
         // 파라미터 분리
         var parameters = afterDomain.split('&')
-        var useremail = 'useremail'
-        var token;
-        parameters.forEach(parameter => {
-            // 토큰
-            if (parameter.includes('token')) {
-                token = parameter.split('=')[1]
-                this.$cookies.set('token', token, '1d')
-            }
-            // 유저 이메일
-            else if (parameter.includes('useremail')) {
-                useremail = parameter.split('=')[1]
-            }
-            console.log('useremail', useremail)
-        })
+        var useremail = parameters[1].split('=')[1].split('%40')[0]+"@"+parameters[1].split('=')[1].split('%40')[1];
 
-        // api.get(`/api/v1//user/`, {
+        console.log('success')
+        localStorage.setItem("userEmail", useremail)
+        router.push("/")
+        // console.log("user")
+        // api.post(`/user`, {
         //     useremail: useremail
         // })
         // .then(res => {
         //     localStorage.usernickname = res.data.usernickname
         //     localStorage.userData = JSON.stringify(res.data)
-        //     EventBus.$emit('isLogedIn');
         //     this.$router.push({ name: 'Home'})
         // })
         // .catch(err => console.log(err))

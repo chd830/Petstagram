@@ -4,8 +4,8 @@
     <v-text-field
       hide-details="auto"
       label="Email"
-      :rules="[() => !!userEmail || 'This field is required']"
-      v-model="userEmail"
+      v-model.lazy="userEmail"
+      :rules="emailRules"
     ></v-text-field>
     <v-text-field 
       label="NickName"
@@ -35,8 +35,7 @@
       @click:append-outer="increment" 
       prepend-icon="remove" 
       @click:prepend="decrement">
-      </v-text-field>
-    <!-- <input ref="imageInput" type="file" hidden @change="onChangeImages"> -->
+    </v-text-field>
     <v-img :src="imageUrl"></v-img>
     <v-file-input
       @change="changeImg"
@@ -77,12 +76,15 @@ export default {
       show2: false,
       password: 'Password',
       rules: {
-        max: value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 4 || 'Min 4 characters',
-        emailMatch: () => (`The email and password you entered don't match`),
-        
-      }
+        max: value => !value || value.size < 2000000 || '파일의 크기 초과',
+        required: value => !!value || '입력',
+        min: v => v.length >= 4 || '4글자 이상 입력',
+        // valid: value => (value = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i) || '유효한 이메일이 아닙니다.'
+      },
+      emailRules: [
+        v => !!v || '입력',
+        v => /.+@.+/.test(v) || '유효한 이메일이 아닙니다',
+      ],
     }
   },
   methods: {
@@ -102,12 +104,11 @@ export default {
       router.push('/signin')
     },
     signup() {
-      console.log('click')
       if(this.userPwd != this.userPwd2) {
         alert('입력한 두 비밀번호가 일치하지 않습니다.')
         return
       }
-      console.log("USERIMG: ",this.userImg);
+
       const storageRef = firebase.storage().ref(`users/${this.userEmail}`)
       storageRef.put(this.userImg)
       .then(() => {
