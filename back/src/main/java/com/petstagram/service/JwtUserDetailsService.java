@@ -30,8 +30,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 		Users getUser = new Users();
 		getUser.setUserEmail(email);
 		Users user = userService.getUsers(getUser);
-		user.setRole(Role.USER);
-		System.out.println("DETAIL SERVICE: "+user);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with email: " + email);
         } else {

@@ -55,4 +55,16 @@ public class Token {
 	public void setId_token(String id_token) {
 		this.id_token = id_token;
 	}
+
+	@Override
+	public String toString() {
+		return "Token{" +
+				"access_token='" + access_token + '\'' +
+				", expires_in=" + expires_in +
+				", refresh_token='" + refresh_token + '\'' +
+				", scope='" + scope + '\'' +
+				", token_type='" + token_type + '\'' +
+				", id_token='" + id_token + '\'' +
+				'}';
+	}
 }

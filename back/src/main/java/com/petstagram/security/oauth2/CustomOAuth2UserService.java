@@ -1,7 +1,7 @@
 package com.petstagram.security.oauth2;
 
 import com.petstagram.data.Users;
-import com.petstagram.service.UserService;
+import com.petstagram.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,7 +19,7 @@ import java.util.Collections;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final HttpSession httpSession;
 
     @Override

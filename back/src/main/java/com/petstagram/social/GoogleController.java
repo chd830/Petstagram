@@ -21,6 +21,7 @@ import com.petstagram.data.Token;
 import com.petstagram.data.Users;
 import com.petstagram.service.JwtUserDetailsService;
 import com.petstagram.service.UserService;
+import com.petstagram.service.UserServiceImpl;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -43,7 +44,7 @@ public class GoogleController {
 	static private final String client_id = "547900846133-ioo7t5i7eeal0b62uqshq2bje70g2hhi.apps.googleusercontent.com";
 	static private final String client_secret = "1BIsFcGsIEr7VnXjqnJT7nro";
 	static private final String redirect_uri = "http://localhost:8000/api/v1/auth/google/callback";
-	
+
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -120,10 +121,12 @@ public class GoogleController {
 			user.setUserNickname(email.split("@")[0]);
 			user.setRole(Role.USER);
 			user.setUserPwd(bcryptEncoder.encode(pass));
+			System.out.println("INSERT USER");
 			userService.insert(user);
+			System.out.println("GET USER");
+			System.out.println(userService.getUsers(user));
 			// 토큰 생성
-			final UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(user.getUserEmail());
+			final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserEmail());
 			String loginToken = jwtTokenUtil.generateToken(userDetails);
         	System.out.println(loginToken);
 
