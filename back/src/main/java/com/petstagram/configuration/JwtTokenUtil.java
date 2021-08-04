@@ -9,7 +9,7 @@ import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
 
 import com.petstagram.data.Users;
-import com.petstagram.service.UserService;
+import com.petstagram.service.UserServiceImpl;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +24,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtTokenUtil implements Serializable {
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	
 	private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 6 * 60 * 60;

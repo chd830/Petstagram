@@ -6,6 +6,7 @@ import com.petstagram.data.JwtResponse;
 import com.petstagram.data.Users;
 import com.petstagram.service.JwtUserDetailsService;
 import com.petstagram.service.UserService;
+import com.petstagram.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

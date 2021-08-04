@@ -2,19 +2,20 @@ package com.petstagram.controller;
 
 import com.petstagram.data.Users;
 import com.petstagram.service.UserService;
+import com.petstagram.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class UserController {
 
-    private static UserService userService = new UserService();
+    @Autowired
+    private static UserService userService;
 
     @ExceptionHandler
     public ResponseEntity<Map<String, Object>> handler(Exception e){
@@ -45,7 +46,14 @@ public class UserController {
         System.out.println(userService.getUsers(user));
         return handleSuccess(userService.getUsers(user));
     }
-      
+
+    @GetMapping("/api/v1/users")
+    public ResponseEntity<Map<String, Object>> getAllUsers() {
+        System.out.println("USER LISTS");
+        for(Users u : userService.getAllUsers())
+            System.out.println(u);
+        return handleSuccess(userService.getAllUsers());
+    }
     @PostMapping("/api/v1/user/update")
     public ResponseEntity<Map<String, Object>> updateUser(@RequestBody Users user) {
         return handleSuccess(userService.updateUsers(user));
